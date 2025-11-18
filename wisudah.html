@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Bersama Kami - Dark Mode</title>
+    <!-- Font Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Link ke file CSS eksternal -->
+    <link rel="stylesheet" href="web.css">
+</head>
+<body>
+    <!-- AUDIO ELEMENT - PENTING: GANTI DENGAN URL MP3 MILIK ANDA -->
+    <audio id="backgroundMusic" loop>
+        <!-- 
+            ANDA HARUS MENGGANTI URL DI BAWAH INI DENGAN LINK MP3 YANG VALID 
+            agar musik bisa diputar. Link placeholder ini tidak akan berfungsi.
+        -->
+        <!-- <source src="https://ia800806.us.archive.org/18/items/test-mp3/test.mp3" type="audio/mpeg" type="audio/mpeg"> -->
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <!-- TOMBOL UNTUK MENGAKTIFKAN MUSIK -->
+    <button class="music-toggle" id="musicToggle" onclick="toggleMusic()">
+        <!-- Ikon Speaker SVG -->
+        <svg id="musicIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zm-15.5-6v12h4l5 5V1l-5 5H3z"/>
+        </svg>
+    </button>
+    
+    <header>
+        <h1>Portofolio Bersama Kami</h1>
+        <p>Momen terbaik, hobi seru, dan perjalanan penuh warna.</p>
+    </header>
+
+    <!-- BIO -->
+    <section class="bio reveal">
+        <!-- <h2>Tentang Kami</h2> -->
+
+        <div class="bio-card reveal reveal-delay-1">
+            <!-- GANTI DENGAN FOTO ANDA SENDIRI -->
+            <img src="image/arif.jpg" alt="Foto Muh. Arifatwa">
+            <h3>Muh. Arifatwa, S.Kom</h3>
+            <p>Mahasiswa, gamer, pecinta teknologi.</p>
+        </div>
+
+        <div class="bio-card reveal reveal-delay-2">
+            <!-- GANTI DENGAN FOTO PASANGAN ANDA -->
+            <img src="image/fisah.jpg" alt="Foto Pasangan">
+            <h3>Nurwafisah, S.Pd</h3>
+            <p>Kreatif, penyayang, dan partner terbaik.</p>
+        </div>
+    </section>
+
+    <!-- ORBIT -->
+    <section class="reveal">
+        <h2>Orbit Bersama</h2>
+        <div class="orbit-container">
+            <div class="orbit-center"><span>💚 Kami</span></div>
+            <div class="orbit-item"><div>Wisuda</div></div>
+            <div class="orbit-item"><div>FF/ML</div></div>
+            <div class="orbit-item"><div>Trip</div></div>
+            <div class="orbit-item"><div>Cinta</div></div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="skills reveal">
+        <h2 style="width:100%">Skills Bersama</h2>
+        <div class="skill">Teamwork 💪</div>
+        <div class="skill">Gaming 🎮</div>
+        <div class="skill">Creative 🎨</div>
+        <div class="skill">Adaptif 🌟</div>
+        <div class="skill">Wisuda 🎓</div>
+    </section>
+
+    <!-- GALERI OTOMATIS -->
+    <section class="reveal">
+        <h2>Galeri Kenangan</h2>
+        <div class="slider">
+            <div class="slides">
+                <!-- SILAKAN GANTI PATH INI DENGAN FOTO KENANGAN ANDA -->
+                <img src="image/1.jpg" alt="Foto Wisuda">
+                <img src="image/2.jpg" alt="Foto Liburan">
+                <img src="image/3.jpg" alt="Foto Wisuda 2">
+                <img src="image/4.jpg" alt="Foto Gaming">
+                <img src="image/5.jpg" alt="Foto Jalan">
+                
+                <!-- SET 2 (DUPLIKAT untuk efek loop tanpa putus) -->
+                <img src="image/ml1.jpg" alt="Foto Wisuda">
+                <img src="image/ml2.jpg" alt="Foto Liburan">
+                <img src="image/ff1.jpg" alt="Foto Wisuda 2">
+                <img src="image/ff2.jpg" alt="Foto Gaming">
+                <img src="image/6.jpg" alt="Foto Jalan">
+            </div>
+        </div>
+    </section>
+
+    <!-- GAME -->
+    <section class="game reveal" style="text-align:center;">
+        <h2>Mini Game</h2>
+        <button onclick="launchConfetti()" class="confetti-button">
+            Klik Aku! 🎉
+        </button>
+    </section>
+
+    <!-- PROFILE FF -->
+    <section class="reveal">
+        <h2>Profil Game FF</h2>
+        <div class="profile-container">
+            <div class="profile-card reveal-delay-1">
+                <img src="image/ff1.jpg" alt="FF1">
+                <p>Kang - Clone</p>
+                <p>Level: 70</p>
+            </div>
+            <div class="profile-card reveal-delay-2">
+                <img src="image/ff2.jpg" alt="FF2">
+                <p>Fii</p>
+                <p>Level: 50</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- PROFILE ML -->
+    <section class="reveal">
+        <h2>Profil Game ML</h2>
+        <div class="profile-container">
+            <div class="profile-card reveal-delay-1">
+                <img src="image/ml1.jpg" alt="ML1">
+                <p>KD. Erorr</p>
+                <p>Level: 40</p>
+            </div>
+            <div class="profile-card reveal-delay-2">
+                <img src="image/ml2.jpg" alt="ML2">
+                <p>Fii</p>
+                <p>Level: 25</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONI -->
+    <section class="testimoni reveal">
+        <h2>Pesan & Testimoni</h2>
+        <form id="messageForm">
+            <input type="text" id="name" placeholder="Nama" required>
+            <textarea id="message" placeholder="Tulis pesan..." required></textarea>
+            <button type="submit">Kirim Pesan</button>
+        </form>
+        <div class="messages" id="messages"></div>
+    </section>
+
+    <footer>
+        <p>&copy; Di buat oleh BUng Clone Tahun 2025 @Bung-Clone </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        // Logika Musik Latar Belakang
+        function toggleMusic() {
+            const audio = document.getElementById('backgroundMusic');
+            const toggleButton = document.getElementById('musicToggle');
+            const musicIcon = document.getElementById('musicIcon');
+
+            if (audio.paused) {
+                audio.play().then(() => {
+                    toggleButton.classList.add('playing');
+                    // Ganti ikon menjadi speaker penuh
+                    musicIcon.innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM19 12c0-2.88-1.63-5.36-4.01-6.63v13.26c2.38-1.27 4.01-3.75 4.01-6.63z"/>';
+                }).catch(error => {
+                    console.error("Gagal memutar audio:", error);
+                    // Gunakan pesan di UI sebagai pengganti alert()
+                    const messageArea = document.querySelector('header');
+                    messageArea.insertAdjacentHTML('afterend', '<div class="alert-message">Gagal memutar musik. Pastikan Anda telah mengganti link MP3 dengan link yang valid.</div>');
+                    setTimeout(() => document.querySelector('.alert-message')?.remove(), 5000);
+                });
+            } else {
+                audio.pause();
+                toggleButton.classList.remove('playing');
+                // Ganti ikon menjadi speaker tanpa suara (mute)
+                musicIcon.innerHTML = '<path d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zm-15.5-6v12h4l5 5V1l-5 5H3z"/>';
+            }
+        }
+
+
+        // Confetti Logic
+        function launchConfetti(){
+            var duration = 3 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                var particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+
+        // Form Logic
+        document.getElementById('messageForm').addEventListener('submit', function(e){
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const message = document.getElementById('message').value;
+            const messagesDiv = document.getElementById('messages');
+            const newMessage = document.createElement('div');
+            newMessage.className = 'message';
+            newMessage.innerHTML = `<strong>${name}:</strong> ${message}`;
+            messagesDiv.appendChild(newMessage);
+
+            document.getElementById('name').value = '';
+            document.getElementById('message').value = '';
+        });
+
+        // SCROLL ANIMATION OBSERVER
+        const observerOptions = {
+            threshold: 0.15 
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+        
+        document.querySelectorAll('.bio-card, .profile-card').forEach(el => {
+            el.classList.add('reveal'); 
+            observer.observe(el);
+        });
+    </script>
+
+</body>
+</html>
