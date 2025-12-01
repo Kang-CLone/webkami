@@ -4,25 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portofolio Bersama Kami - Dark Mode</title>
-    <!-- Font Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Link ke file CSS eksternal -->
     <link rel="stylesheet" href="web.css">
-</head>
+    </head>
 <body>
-    <!-- AUDIO ELEMENT - PENTING: GANTI DENGAN URL MP3 MILIK ANDA -->
     <audio id="backgroundMusic" loop>
-        <!-- 
-            ANDA HARUS MENGGANTI URL DI BAWAH INI DENGAN LINK MP3 YANG VALID 
-            agar musik bisa diputar. Link placeholder ini tidak akan berfungsi.
-        -->
-        <!-- <source src="https://ia800806.us.archive.org/18/items/test-mp3/test.mp3" type="audio/mpeg" type="audio/mpeg"> -->
         Browser Anda tidak mendukung elemen audio.
     </audio>
 
-    <!-- TOMBOL UNTUK MENGAKTIFKAN MUSIK -->
     <button class="music-toggle" id="musicToggle" onclick="toggleMusic()">
-        <!-- Ikon Speaker SVG -->
         <svg id="musicIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
             <path d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zm-15.5-6v12h4l5 5V1l-5 5H3z"/>
         </svg>
@@ -33,26 +23,28 @@
         <p>Momen terbaik, hobi seru, dan perjalanan penuh warna.</p>
     </header>
 
-    <!-- BIO -->
     <section class="bio reveal">
-        <!-- <h2>Tentang Kami</h2> -->
-
         <div class="bio-card reveal reveal-delay-1">
-            <!-- GANTI DENGAN FOTO ANDA SENDIRI -->
             <img src="image/arif.jpg" alt="Foto Muh. Arifatwa">
             <h3>Muh. Arifatwa, S.Kom</h3>
             <p>Mahasiswa, gamer, pecinta teknologi.</p>
+             <a href="https://www.instagram.com/bung_clonee?igsh=NDlyMXpmeXd5cnVt" target="_blank" class="social-link instagram-link">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                 Bung CLone
+            </a>
         </div>
 
         <div class="bio-card reveal reveal-delay-2">
-            <!-- GANTI DENGAN FOTO PASANGAN ANDA -->
             <img src="image/fisah.jpg" alt="Foto Pasangan">
             <h3>Nurwafisah, S.Pd</h3>
             <p>Kreatif, penyayang, dan partner terbaik.</p>
+            <a href="https://www.instagram.com/nr.wfsah?igsh=dmsybTJxZTM4YTBv" target="_blank" class="social-link instagram-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                nr.wfsah
+            </a>
         </div>
     </section>
 
-    <!-- ORBIT -->
     <section class="reveal">
         <h2>Orbit Bersama</h2>
         <div class="orbit-container">
@@ -64,7 +56,6 @@
         </div>
     </section>
 
-    <!-- SKILLS -->
     <section class="skills reveal">
         <h2 style="width:100%">Skills Bersama</h2>
         <div class="skill">Teamwork 💪</div>
@@ -74,30 +65,25 @@
         <div class="skill">Wisuda 🎓</div>
     </section>
 
-    <!-- GALERI OTOMATIS -->
     <section class="reveal">
         <h2>Galeri Kenangan</h2>
         <div class="slider">
             <div class="slides">
-                <!-- SILAKAN GANTI PATH INI DENGAN FOTO KENANGAN ANDA -->
                 <img src="image/1.jpg" alt="Foto Wisuda">
                 <img src="image/2.jpg" alt="Foto Liburan">
                 <img src="image/3.jpg" alt="Foto Wisuda 2">
                 <img src="image/4.jpg" alt="Foto Gaming">
                 <img src="image/5.jpg" alt="Foto Jalan">
                 
-                <!-- SET 2 (DUPLIKAT untuk efek loop tanpa putus) -->
                 <img src="image/ml1.jpg" alt="Foto Wisuda">
                 <img src="image/ml2.jpg" alt="Foto Liburan">
                 <img src="image/ff1.jpg" alt="Foto Wisuda 2">
                 <img src="image/ff2.jpg" alt="Foto Gaming">
                 <img src="image/6.jpg" alt="Foto Jalan">
-                <img src="image/1764555032335.jpg" alt="Foto Jalan">
             </div>
         </div>
     </section>
 
-    <!-- GAME -->
     <section class="game reveal" style="text-align:center;">
         <h2>Mini Game</h2>
         <button onclick="launchConfetti()" class="confetti-button">
@@ -105,7 +91,6 @@
         </button>
     </section>
 
-    <!-- PROFILE FF -->
     <section class="reveal">
         <h2>Profil Game FF</h2>
         <div class="profile-container">
@@ -122,7 +107,6 @@
         </div>
     </section>
     
-    <!-- PROFILE ML -->
     <section class="reveal">
         <h2>Profil Game ML</h2>
         <div class="profile-container">
@@ -139,7 +123,6 @@
         </div>
     </section>
 
-    <!-- TESTIMONI -->
     <section class="testimoni reveal">
         <h2>Pesan & Testimoni</h2>
         <form id="messageForm">
@@ -152,6 +135,16 @@
 
     <footer>
         <p>&copy; Di buat oleh BUng Clone Tahun 2025 @Bung-Clone </p>
+        <div class="social-footer">
+            <a href="https://www.instagram.com/bung_clonee?igsh=NDlyMXpmeXd5cnVt" target="_blank" class="footer-instagram-link">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                Bung CLone
+            </a>
+            <a href="https://www.instagram.com/nr.wfsah?igsh=dmsybTJxZTM4YTBv" target="_blank" class="footer-instagram-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                nr.wfsah
+            </a>
+        </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
