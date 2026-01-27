@@ -9,7 +9,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Poppins', sans-serif; background: #0e0e0e; color: #fff; line-height: 1.7; overflow-x: hidden; }
 
-        /* Landing Page dengan Background Gambar */
+        /* Landing Page dengan Background Gambar dari folder image/ */
         .landing {
             width:100%; 
             height:100vh;
@@ -23,7 +23,7 @@
             overflow: hidden;
         }
         
-        /* Background gambar dengan nama bgweb.jpeg */
+        /* Background gambar dari folder image/bgweb.jpeg */
         .landing::before {
             content: '';
             position: absolute;
@@ -33,7 +33,7 @@
             height: 100%;
             background: 
                 linear-gradient(rgba(14, 14, 14, 0.7), rgba(14, 14, 14, 0.5)),
-                url('bgweb.jpeg');
+                url('image/bgweb.jpeg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
