@@ -9,7 +9,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Poppins', sans-serif; background: #0e0e0e; color: #fff; line-height: 1.7; overflow-x: hidden; }
 
-        /* Landing Page dengan Background Gambar Utuh */
+        /* Landing Page dengan Background Gambar dari folder image/ */
         .landing {
             width:100%; 
             height:100vh;
@@ -23,7 +23,7 @@
             overflow: hidden;
         }
         
-        /* Container untuk gambar background yang utuh */
+        /* Background gambar dari folder image/bgweb.jpeg */
         .landing::before {
             content: '';
             position: absolute;
@@ -32,77 +32,32 @@
             width: 100%;
             height: 100%;
             background: 
-                linear-gradient(rgba(14, 14, 14, 0.7), rgba(14, 14, 14, 0.5));
+                linear-gradient(rgba(14, 14, 14, 0.7), rgba(14, 14, 14, 0.5)),
+                url('image/bgweb.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             z-index: -1;
         }
         
-        /* Gambar background yang terpisah */
-        .background-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('image/bgweb.jpeg');
-            background-repeat: no-repeat;
-            z-index: -2;
-        }
-        
-        /* Untuk desktop (landscape) */
-        .background-image {
-            background-size: contain;
-            background-position: center;
-            background-color: #0e0e0e; /* Warna background jika gambar tidak memenuhi */
-        }
-        
-        /* Untuk mobile portrait */
-        @media screen and (orientation: portrait) {
-            .background-image {
-                background-size: contain;
-                background-position: center;
-            }
-        }
-        
-        /* Untuk layar yang sangat lebar */
-        @media screen and (min-aspect-ratio: 16/9) {
-            .background-image {
-                background-size: cover;
-                height: 100%;
-                width: 100%;
-            }
-        }
-        
-        /* Untuk layar yang sangat tinggi (portrait ekstrem) */
-        @media screen and (max-aspect-ratio: 9/16) {
-            .background-image {
-                background-size: cover;
-                height: 100%;
-                width: 100%;
-            }
-        }
-        
         .landing h1 { 
-            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-size:3.2rem; 
             font-weight:700; 
             color:#fff; 
             text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-            padding: 0 20px;
-            margin-bottom: 10px;
         }
         
         .landing p { 
             margin-top:10px; 
-            font-size: clamp(1rem, 3vw, 1.3rem);
+            font-size:1.3rem; 
             color:#f0f0f0; 
             opacity:0.9;
             text-shadow: 0 1px 5px rgba(0,0,0,0.5);
-            padding: 0 20px;
-            max-width: 600px;
         }
         
         .landing button {
             margin-top:30px; 
-            padding: clamp(10px, 3vw, 12px) clamp(20px, 4vw, 25px); 
+            padding:12px 25px; 
             border:none; 
             border-radius:8px;
             background:#0e0e0e; 
@@ -110,8 +65,7 @@
             font-weight:700; 
             cursor:pointer;
             transition:0.3s; 
-            font-size: clamp(0.9rem, 2.5vw, 1rem);
-            min-width: 150px;
+            font-size:1rem;
         }
         
         .landing button:hover { 
@@ -120,8 +74,8 @@
         }
         
         @keyframes fadeIn { 
-            from { opacity:0; transform: translateY(20px); } 
-            to { opacity:1; transform: translateY(0); } 
+            from { opacity:0; } 
+            to { opacity:1; } 
         }
     </style>
 </head>
@@ -129,62 +83,16 @@
 
     <!-- Landing Page -->
     <div class="landing" id="landing">
-        <!-- Background image terpisah -->
-        <div class="background-image" id="bgImage"></div>
-        
         <h1>Selamat Datang</h1>
         <p>Jelajahi perjalanan dan momen terbaik kami.</p>
         <button onclick="enterSite()">Masuk</button>
     </div>
 
+    <!-- Script Redirect -->
     <script>
         function enterSite() {
             window.location.href = "wisudah.html";
         }
-        
-        // Fungsi untuk menyesuaikan background gambar
-        function adjustBackground() {
-            const bgImage = document.getElementById('bgImage');
-            const img = new Image();
-            img.src = 'image/bgweb.jpeg';
-            
-            img.onload = function() {
-                const imgWidth = img.naturalWidth;
-                const imgHeight = img.naturalHeight;
-                const imgAspectRatio = imgWidth / imgHeight;
-                const screenAspectRatio = window.innerWidth / window.innerHeight;
-                
-                console.log('Gambar:', imgWidth, 'x', imgHeight, 'Rasio:', imgAspectRatio.toFixed(2));
-                console.log('Layar:', window.innerWidth, 'x', window.innerHeight, 'Rasio:', screenAspectRatio.toFixed(2));
-                
-                // Jika rasio gambar lebih lebar dari rasio layar (landscape)
-                if (screenAspectRatio > imgAspectRatio) {
-                    // Layar lebih lebar dari gambar
-                    bgImage.style.backgroundSize = 'auto 100%';
-                    bgImage.style.backgroundPosition = 'center';
-                } else {
-                    // Layar lebih tinggi dari gambar
-                    bgImage.style.backgroundSize = '100% auto';
-                    bgImage.style.backgroundPosition = 'center';
-                }
-            };
-            
-            img.onerror = function() {
-                console.error('Gambar tidak ditemukan: image/bgweb.jpeg');
-                // Fallback ke warna solid
-                bgImage.style.background = 'linear-gradient(135deg, #00ff88 0%, #00995e 50%, #0e0e0e 100%)';
-            };
-        }
-        
-        // Panggil saat load dan resize
-        window.addEventListener('load', adjustBackground);
-        window.addEventListener('resize', adjustBackground);
-        window.addEventListener('orientationchange', function() {
-            setTimeout(adjustBackground, 100);
-        });
-        
-        // Deteksi awal
-        adjustBackground();
     </script>
 
 </body>
