@@ -9,7 +9,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Poppins', sans-serif; background: #0e0e0e; color: #fff; line-height: 1.7; overflow-x: hidden; }
 
-        /* Landing Page dengan Background Gambar dari folder image/ */
+        /* Landing Page dengan Background Gambar Responsif */
         .landing {
             width:100%; 
             height:100vh;
@@ -23,7 +23,7 @@
             overflow: hidden;
         }
         
-        /* Background gambar dari folder image/bgweb.jpeg */
+        /* Background untuk desktop (orientasi landscape) */
         .landing::before {
             content: '';
             position: absolute;
@@ -40,24 +40,51 @@
             z-index: -1;
         }
         
+        /* Override untuk mobile portrait (orientasi portrait) */
+        @media screen and (orientation: portrait) {
+            .landing::before {
+                background: 
+                    linear-gradient(rgba(14, 14, 14, 0.7), rgba(14, 14, 14, 0.5)),
+                    url('image/bgweb.jpeg');
+                background-size: cover;
+                background-position: center;
+                /* Untuk orientasi portrait, kita bisa crop bagian tengah */
+                background-position: center 30%;
+            }
+        }
+        
+        /* Jika ingin gambar yang berbeda untuk mobile portrait */
+        /* @media screen and (orientation: portrait) and (max-width: 768px) {
+            .landing::before {
+                background: 
+                    linear-gradient(rgba(14, 14, 14, 0.7), rgba(14, 14, 14, 0.5)),
+                    url('image/bgweb-portrait.jpeg');  gambar versi portrait
+                background-size: cover;
+                background-position: center;
+            }
+        } */
+        
         .landing h1 { 
-            font-size:3.2rem; 
+            font-size: clamp(2rem, 5vw, 3.2rem);
             font-weight:700; 
             color:#fff; 
             text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            padding: 0 20px;
         }
         
         .landing p { 
             margin-top:10px; 
-            font-size:1.3rem; 
+            font-size: clamp(1rem, 3vw, 1.3rem);
             color:#f0f0f0; 
             opacity:0.9;
             text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+            padding: 0 20px;
+            max-width: 600px;
         }
         
         .landing button {
             margin-top:30px; 
-            padding:12px 25px; 
+            padding: clamp(10px, 3vw, 12px) clamp(20px, 4vw, 25px); 
             border:none; 
             border-radius:8px;
             background:#0e0e0e; 
@@ -65,7 +92,8 @@
             font-weight:700; 
             cursor:pointer;
             transition:0.3s; 
-            font-size:1rem;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            min-width: 150px;
         }
         
         .landing button:hover { 
@@ -76,6 +104,52 @@
         @keyframes fadeIn { 
             from { opacity:0; } 
             to { opacity:1; } 
+        }
+        
+        /* Untuk layar yang sangat lebar (desktop landscape) */
+        @media screen and (min-width: 1200px) and (orientation: landscape) {
+            .landing::before {
+                background-size: 100% auto;
+                background-position: center top;
+            }
+        }
+        
+        /* Untuk mobile landscape */
+        @media screen and (max-width: 900px) and (orientation: landscape) {
+            .landing {
+                padding: 40px 20px;
+            }
+            
+            .landing h1 {
+                font-size: 2rem;
+            }
+            
+            .landing p {
+                font-size: 1rem;
+            }
+            
+            .landing::before {
+                background-position: center 20%;
+            }
+        }
+        
+        /* Untuk mobile portrait kecil */
+        @media screen and (max-width: 480px) and (orientation: portrait) {
+            .landing h1 {
+                font-size: 1.8rem;
+            }
+            
+            .landing p {
+                font-size: 1rem;
+            }
+            
+            .landing button {
+                padding: 10px 20px;
+            }
+            
+            .landing::before {
+                background-position: center 25%;
+            }
         }
     </style>
 </head>
@@ -88,11 +162,51 @@
         <button onclick="enterSite()">Masuk</button>
     </div>
 
-    <!-- Script Redirect -->
+    <!-- Script untuk handle responsif dan orientasi -->
     <script>
         function enterSite() {
             window.location.href = "wisudah.html";
         }
+        
+        // Deteksi orientasi dan sesuaikan background
+        function adjustBackgroundForOrientation() {
+            const landing = document.querySelector('.landing');
+            const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+            const isMobile = window.innerWidth <= 768;
+            
+            if (isPortrait) {
+                // Untuk portrait (mobile), sesuaikan background position
+                document.documentElement.style.setProperty('--bg-position', 'center 30%');
+                
+                // Jika ingin gambar yang berbeda untuk portrait
+                // if (isMobile) {
+                //     document.querySelector('.landing').style.backgroundImage = 
+                //         "linear-gradient(rgba(14, 14, 14, 0.7), rgba(14, 14, 14, 0.5)), url('image/bgweb-portrait.jpeg')";
+                // }
+            } else {
+                // Untuk landscape (desktop), gunakan cover normal
+                document.documentElement.style.setProperty('--bg-position', 'center');
+            }
+        }
+        
+        // Panggil saat load dan resize
+        window.addEventListener('load', adjustBackgroundForOrientation);
+        window.addEventListener('resize', adjustBackgroundForOrientation);
+        window.addEventListener('orientationchange', function() {
+            // Beri sedikit delay untuk orientasi berubah
+            setTimeout(adjustBackgroundForOrientation, 100);
+        });
+        
+        // Deteksi jika gambar gagal dimuat
+        const bgImage = new Image();
+        bgImage.src = 'image/bgweb.jpeg';
+        
+        bgImage.onerror = function() {
+            console.warn('Gambar background tidak ditemukan di image/bgweb.jpeg');
+            // Fallback ke warna solid jika gambar tidak ditemukan
+            document.querySelector('.landing').style.background = 
+                'linear-gradient(135deg, #00ff88 0%, #00995e 50%, #0e0e0e 100%)';
+        };
     </script>
 
 </body>
