@@ -6,7 +6,227 @@
     <title>Portofolio Bersama Kami - Dark Mode</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="web.css">
-    </head>
+    <style>
+        /* GAME STYLES */
+        .game-container {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .game-container.active {
+            display: block;
+        }
+
+        .game-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .game-tab {
+            padding: 12px 25px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            color: #fff;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            font-size: 0.95rem;
+        }
+
+        .game-tab:hover {
+            border-color: #00ff88;
+            background: rgba(0, 255, 136, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .game-tab.active {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #0e0e0e;
+            border-color: #00ff88;
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
+        }
+
+        .game-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .game-info {
+            text-align: center;
+            font-size: 0.95rem;
+            color: #aaa;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        /* FLAPPY BIRD */
+        #flappyCanvas {
+            border: 2px solid #00ff88;
+            border-radius: 10px;
+            background: linear-gradient(180deg, #87CEEB 0%, #E0F6FF 100%);
+            display: block;
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+        }
+
+        .game-stats {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .stat {
+            text-align: center;
+            background: rgba(0, 255, 136, 0.1);
+            padding: 15px 25px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00ff88;
+        }
+
+        /* MEMORY GAME */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 15px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .memory-card {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            border: 2px solid rgba(0, 255, 136, 0.5);
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.2);
+            user-select: none;
+        }
+
+        .memory-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 255, 136, 0.4);
+        }
+
+        .memory-card.flipped {
+            background: #1c1c1c;
+            border-color: #00ff88;
+        }
+
+        .memory-card.matched {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* SNAKE GAME */
+        #snakeCanvas {
+            border: 2px solid #00ff88;
+            border-radius: 10px;
+            background: #0a0a0a;
+            display: block;
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+        }
+
+        .game-controls {
+            margin-top: 20px;
+            text-align: center;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        .game-controls strong {
+            color: #00ff88;
+        }
+
+        .reset-button {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #0e0e0e;
+            border: none;
+            border-radius: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 6px 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .reset-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.5);
+        }
+
+        .reset-button:active {
+            transform: translateY(-1px);
+        }
+
+        .game-message {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #00ff88;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+            margin-top: 15px;
+            min-height: 30px;
+        }
+
+        @media(max-width: 768px) {
+            .memory-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+                max-width: 100%;
+            }
+
+            .memory-card {
+                width: 100%;
+                height: 70px;
+                font-size: 1.5rem;
+            }
+
+            #flappyCanvas, #snakeCanvas {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .game-tabs {
+                gap: 8px;
+            }
+
+            .game-tab {
+                padding: 10px 20px;
+                font-size: 0.85rem;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
 <body>
     <audio id="backgroundMusic" loop>
         Browser Anda tidak mendukung elemen audio.
@@ -29,7 +249,7 @@
             <h3>Muh. Arifatwa, S.Kom</h3>
             <p>Mahasiswa, gamer, pecinta teknologi.</p>
              <a href="https://www.instagram.com/bung_clonee?igsh=NDlyMXpmeXd5cnVt" target="_blank" class="social-link instagram-link">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37"></path><circle cx="17.5" cy="6.5" r="1.5"></circle></svg>
                  Bung CLone
             </a>
         </div>
@@ -39,7 +259,7 @@
             <h3>Nurwafisah, S.Pd</h3>
             <p>Kreatif, penyayang, dan partner terbaik.</p>
             <a href="https://www.instagram.com/nr.wfsah?igsh=dmsybTJxZTM4YTBv" target="_blank" class="social-link instagram-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37"></path><circle cx="17.5" cy="6.5" r="1.5"></circle></svg>
                 nr.wfsah
             </a>
         </div>
@@ -84,11 +304,68 @@
         </div>
     </section>
 
+    <!-- GAME SECTION -->
     <section class="game reveal" style="text-align:center;">
-        <h2>Mini Game</h2>
-        <button onclick="launchConfetti()" class="confetti-button">
-            Klik Aku! 🎉
-        </button>
+        <h2>🎮 Game Arena - Mainkan & Raih Skor Tertinggi!</h2>
+        
+        <div class="game-tabs">
+            <button class="game-tab active" onclick="switchGame('flappy')">🐦 Flappy Bird</button>
+            <button class="game-tab" onclick="switchGame('memory')">🧠 Memory Game</button>
+            <button class="game-tab" onclick="switchGame('snake')">🐍 Snake Game</button>
+        </div>
+
+        <!-- FLAPPY BIRD GAME -->
+        <div id="flappy-container" class="game-container active">
+            <p class="game-info">Klik canvas atau tekan SPASI untuk terbang! Hindari pipa! 🎯</p>
+            <canvas id="flappyCanvas" width="300" height="400"></canvas>
+            <div class="game-stats">
+                <div class="stat">
+                    <div class="stat-label">Skor Sekarang</div>
+                    <div class="stat-value" id="flappyScore">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Skor Terbaik</div>
+                    <div class="stat-value" id="flappyBest">0</div>
+                </div>
+            </div>
+            <button class="reset-button" onclick="resetFlappyBird()">Mainkan Lagi</button>
+        </div>
+
+        <!-- MEMORY GAME -->
+        <div id="memory-container" class="game-container">
+            <p class="game-info">Temukan semua pasangan emoji! 🎯</p>
+            <div class="game-stats">
+                <div class="stat">
+                    <div class="stat-label">Gerakan</div>
+                    <div class="stat-value" id="memoryMoves">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Pasangan</div>
+                    <div class="stat-value" id="memoryMatched">0/8</div>
+                </div>
+            </div>
+            <div class="memory-grid" id="memoryGrid"></div>
+            <button class="reset-button" onclick="resetMemoryGame()">Mainkan Lagi</button>
+            <div class="game-message" id="memoryMessage"></div>
+        </div>
+
+        <!-- SNAKE GAME -->
+        <div id="snake-container" class="game-container">
+            <p class="game-info">Gunakan ARROW KEYS atau WASD untuk bergerak! 🎯</p>
+            <canvas id="snakeCanvas" width="300" height="300"></canvas>
+            <div class="game-stats">
+                <div class="stat">
+                    <div class="stat-label">Skor Sekarang</div>
+                    <div class="stat-value" id="snakeScore">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Skor Terbaik</div>
+                    <div class="stat-value" id="snakeBest">0</div>
+                </div>
+            </div>
+            <button class="reset-button" onclick="resetSnakeGame()">Mainkan Lagi</button>
+            <div class="game-message" id="snakeMessage"></div>
+        </div>
     </section>
 
     <section class="reveal">
@@ -137,11 +414,11 @@
         <p>&copy; Di buat oleh BUng Clone Tahun 2025 @Bung-Clone </p>
         <div class="social-footer">
             <a href="https://www.instagram.com/bung_clonee?igsh=NDlyMXpmeXd5cnVt" target="_blank" class="footer-instagram-link">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37"></path><circle cx="17.5" cy="6.5" r="1.5"></circle></svg>
                 Bung CLone
             </a>
             <a href="https://www.instagram.com/nr.wfsah?igsh=dmsybTJxZTM4YTBv" target="_blank" class="footer-instagram-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37"></path><circle cx="17.5" cy="6.5" r="1.5"></circle></svg>
                 nr.wfsah
             </a>
         </div>
@@ -150,7 +427,340 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <script>
-        // Logika Musik Latar Belakang
+        // ============ GAME SWITCHER ============
+        function switchGame(game) {
+            document.querySelectorAll('.game-container').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.game-tab').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(game + '-container').classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // ============ FLAPPY BIRD GAME ============
+        const flappyCanvas = document.getElementById('flappyCanvas');
+        const flappyCtx = flappyCanvas.getContext('2d');
+        
+        let flappyBird = {
+            x: 50,
+            y: 150,
+            width: 30,
+            height: 30,
+            velocity: 0,
+            gravity: 0.6,
+            jumpPower: -12
+        };
+
+        let flappyPipes = [];
+        let flappyScore = 0;
+        let flappyBestScore = localStorage.getItem('flappyBest') || 0;
+        let flappyGameRunning = true;
+        let flappyGameOver = false;
+
+        document.getElementById('flappyBest').textContent = flappyBestScore;
+
+        function createFlappyPipe() {
+            const gap = 100;
+            const minY = 50;
+            const maxY = flappyCanvas.height - gap - 50;
+            const pipeY = Math.random() * (maxY - minY) + minY;
+            
+            flappyPipes.push({
+                x: flappyCanvas.width,
+                topHeight: pipeY,
+                bottomY: pipeY + gap,
+                width: 50,
+                scored: false
+            });
+        }
+
+        function drawFlappyBird() {
+            flappyCtx.fillStyle = '#FFD700';
+            flappyCtx.beginPath();
+            flappyCtx.arc(flappyBird.x, flappyBird.y, 15, 0, Math.PI * 2);
+            flappyCtx.fill();
+            
+            flappyCtx.fillStyle = '#000';
+            flappyCtx.beginPath();
+            flappyCtx.arc(flappyBird.x + 8, flappyBird.y - 5, 4, 0, Math.PI * 2);
+            flappyCtx.fill();
+        }
+
+        function drawFlappyPipes() {
+            flappyCtx.fillStyle = '#00ff88';
+            flappyPipes.forEach(pipe => {
+                flappyCtx.fillRect(pipe.x, 0, pipe.width, pipe.topHeight);
+                flappyCtx.fillRect(pipe.x, pipe.bottomY, pipe.width, flappyCanvas.height - pipe.bottomY);
+            });
+        }
+
+        function updateFlappyGame() {
+            if (!flappyGameRunning) return;
+
+            flappyBird.velocity += flappyBird.gravity;
+            flappyBird.y += flappyBird.velocity;
+
+            if (flappyBird.y + 15 >= flappyCanvas.height || flappyBird.y - 15 <= 0) {
+                endFlappyGame();
+                return;
+            }
+
+            flappyPipes.forEach((pipe, index) => {
+                pipe.x -= 5;
+
+                if (!pipe.scored && pipe.x + pipe.width < flappyBird.x) {
+                    pipe.scored = true;
+                    flappyScore++;
+                    document.getElementById('flappyScore').textContent = flappyScore;
+                }
+
+                if (flappyBird.x + 15 > pipe.x && flappyBird.x - 15 < pipe.x + pipe.width) {
+                    if (flappyBird.y - 15 < pipe.topHeight || flappyBird.y + 15 > pipe.bottomY) {
+                        endFlappyGame();
+                        return;
+                    }
+                }
+            });
+
+            flappyPipes = flappyPipes.filter(pipe => pipe.x + pipe.width > 0);
+
+            if (flappyPipes.length < 4) {
+                createFlappyPipe();
+            }
+
+            flappyCtx.clearRect(0, 0, flappyCanvas.width, flappyCanvas.height);
+            drawFlappyBird();
+            drawFlappyPipes();
+
+            requestAnimationFrame(updateFlappyGame);
+        }
+
+        function endFlappyGame() {
+            flappyGameRunning = false;
+            if (flappyScore > flappyBestScore) {
+                flappyBestScore = flappyScore;
+                localStorage.setItem('flappyBest', flappyBestScore);
+                document.getElementById('flappyBest').textContent = flappyBestScore;
+            }
+        }
+
+        function resetFlappyBird() {
+            flappyBird.y = 150;
+            flappyBird.velocity = 0;
+            flappyScore = 0;
+            flappyPipes = [];
+            flappyGameRunning = true;
+            document.getElementById('flappyScore').textContent = 0;
+            updateFlappyGame();
+        }
+
+        flappyCanvas.addEventListener('click', () => {
+            if (flappyGameRunning) flappyBird.velocity = flappyBird.jumpPower;
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && flappyGameRunning) {
+                flappyBird.velocity = flappyBird.jumpPower;
+                e.preventDefault();
+            }
+        });
+
+        resetFlappyBird();
+
+        // ============ MEMORY GAME ============
+        const emojis = ['🍎', '🍎', '🍌', '🍌', '🍒', '🍒', '🍊', '🍊', '🍉', '🍉', '🍓', '🍓', '🥝', '🥝', '🍑', '🍑'];
+        let memoryCards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let memoryMoves = 0;
+        let memoryCanFlip = true;
+
+        function initMemoryGame() {
+            const shuffled = [...emojis].sort(() => Math.random() - 0.5);
+            const grid = document.getElementById('memoryGrid');
+            grid.innerHTML = '';
+            memoryCards = [];
+            flippedCards = [];
+            matchedPairs = 0;
+            memoryMoves = 0;
+            memoryCanFlip = true;
+            document.getElementById('memoryMoves').textContent = 0;
+            document.getElementById('memoryMatched').textContent = '0/8';
+            document.getElementById('memoryMessage').textContent = '';
+
+            shuffled.forEach((emoji, index) => {
+                const card = document.createElement('div');
+                card.className = 'memory-card';
+                card.dataset.emoji = emoji;
+                card.dataset.index = index;
+                card.textContent = '?';
+                card.addEventListener('click', () => flipMemoryCard(card));
+                grid.appendChild(card);
+                memoryCards.push(card);
+            });
+        }
+
+        function flipMemoryCard(card) {
+            if (!memoryCanFlip || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+
+            card.classList.add('flipped');
+            card.textContent = card.dataset.emoji;
+            flippedCards.push(card);
+
+            if (flippedCards.length === 2) {
+                memoryCanFlip = false;
+                memoryMoves++;
+                document.getElementById('memoryMoves').textContent = memoryMoves;
+
+                if (flippedCards[0].dataset.emoji === flippedCards[1].dataset.emoji) {
+                    flippedCards[0].classList.add('matched');
+                    flippedCards[1].classList.add('matched');
+                    matchedPairs++;
+                    document.getElementById('memoryMatched').textContent = matchedPairs + '/8';
+                    flippedCards = [];
+                    memoryCanFlip = true;
+
+                    if (matchedPairs === 8) {
+                        document.getElementById('memoryMessage').textContent = `🎉 Kamu Menang! ${memoryMoves} Gerakan`;
+                    }
+                } else {
+                    setTimeout(() => {
+                        flippedCards[0].classList.remove('flipped');
+                        flippedCards[1].classList.remove('flipped');
+                        flippedCards[0].textContent = '?';
+                        flippedCards[1].textContent = '?';
+                        flippedCards = [];
+                        memoryCanFlip = true;
+                    }, 800);
+                }
+            }
+        }
+
+        function resetMemoryGame() {
+            initMemoryGame();
+        }
+
+        initMemoryGame();
+
+        // ============ SNAKE GAME ============
+        const snakeCanvas = document.getElementById('snakeCanvas');
+        const snakeCtx = snakeCanvas.getContext('2d');
+        
+        const gridSize = 20;
+        let snake = [{x: 150, y: 150}];
+        let food = {x: Math.random() * 15 | 0, y: Math.random() * 15 | 0};
+        food.x *= gridSize;
+        food.y *= gridSize;
+        let snakeDirection = {x: gridSize, y: 0};
+        let nextDirection = {x: gridSize, y: 0};
+        let snakeScore = 0;
+        let snakeBestScore = localStorage.getItem('snakeBest') || 0;
+        let snakeGameRunning = true;
+
+        document.getElementById('snakeBest').textContent = snakeBestScore;
+
+        function drawSnakeGame() {
+            snakeCtx.fillStyle = '#0a0a0a';
+            snakeCtx.fillRect(0, 0, snakeCanvas.width, snakeCanvas.height);
+
+            snakeCtx.fillStyle = '#00ff88';
+            snake.forEach(segment => {
+                snakeCtx.fillRect(segment.x, segment.y, gridSize - 2, gridSize - 2);
+            });
+
+            snakeCtx.fillStyle = '#ff0000';
+            snakeCtx.fillRect(food.x, food.y, gridSize - 2, gridSize - 2);
+        }
+
+        function updateSnakeGame() {
+            if (!snakeGameRunning) return;
+
+            snakeDirection = nextDirection;
+            const head = {x: snake[0].x + snakeDirection.x, y: snake[0].y + snakeDirection.y};
+
+            if (head.x < 0 || head.x >= snakeCanvas.width || head.y < 0 || head.y >= snakeCanvas.height) {
+                endSnakeGame();
+                return;
+            }
+
+            for (let i = 0; i < snake.length; i++) {
+                if (head.x === snake[i].x && head.y === snake[i].y) {
+                    endSnakeGame();
+                    return;
+                }
+            }
+
+            snake.unshift(head);
+
+            if (head.x === food.x && head.y === food.y) {
+                snakeScore += 10;
+                document.getElementById('snakeScore').textContent = snakeScore;
+                food.x = (Math.random() * 15 | 0) * gridSize;
+                food.y = (Math.random() * 15 | 0) * gridSize;
+            } else {
+                snake.pop();
+            }
+
+            drawSnakeGame();
+            setTimeout(updateSnakeGame, 100);
+        }
+
+        function endSnakeGame() {
+            snakeGameRunning = false;
+            if (snakeScore > snakeBestScore) {
+                snakeBestScore = snakeScore;
+                localStorage.setItem('snakeBest', snakeBestScore);
+                document.getElementById('snakeBest').textContent = snakeBestScore;
+            }
+            document.getElementById('snakeMessage').textContent = `Game Over! Skor: ${snakeScore}`;
+        }
+
+        function resetSnakeGame() {
+            snake = [{x: 150, y: 150}];
+            food = {x: (Math.random() * 15 | 0) * gridSize, y: (Math.random() * 15 | 0) * gridSize};
+            snakeDirection = {x: gridSize, y: 0};
+            nextDirection = {x: gridSize, y: 0};
+            snakeScore = 0;
+            snakeGameRunning = true;
+            document.getElementById('snakeScore').textContent = 0;
+            document.getElementById('snakeMessage').textContent = '';
+            updateSnakeGame();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (!snakeGameRunning) return;
+            
+            switch(e.key) {
+                case 'ArrowUp':
+                case 'w':
+                case 'W':
+                    if (snakeDirection.y === 0) nextDirection = {x: 0, y: -gridSize};
+                    e.preventDefault();
+                    break;
+                case 'ArrowDown':
+                case 's':
+                case 'S':
+                    if (snakeDirection.y === 0) nextDirection = {x: 0, y: gridSize};
+                    e.preventDefault();
+                    break;
+                case 'ArrowLeft':
+                case 'a':
+                case 'A':
+                    if (snakeDirection.x === 0) nextDirection = {x: -gridSize, y: 0};
+                    e.preventDefault();
+                    break;
+                case 'ArrowRight':
+                case 'd':
+                case 'D':
+                    if (snakeDirection.x === 0) nextDirection = {x: gridSize, y: 0};
+                    e.preventDefault();
+                    break;
+            }
+        });
+
+        drawSnakeGame();
+        updateSnakeGame();
+
+        // ============ MUSIK & FORM ============
         function toggleMusic() {
             const audio = document.getElementById('backgroundMusic');
             const toggleButton = document.getElementById('musicToggle');
@@ -159,11 +769,9 @@
             if (audio.paused) {
                 audio.play().then(() => {
                     toggleButton.classList.add('playing');
-                    // Ganti ikon menjadi speaker penuh
                     musicIcon.innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM19 12c0-2.88-1.63-5.36-4.01-6.63v13.26c2.38-1.27 4.01-3.75 4.01-6.63z"/>';
                 }).catch(error => {
                     console.error("Gagal memutar audio:", error);
-                    // Gunakan pesan di UI sebagai pengganti alert()
                     const messageArea = document.querySelector('header');
                     messageArea.insertAdjacentHTML('afterend', '<div class="alert-message">Gagal memutar musik. Pastikan Anda telah mengganti link MP3 dengan link yang valid.</div>');
                     setTimeout(() => document.querySelector('.alert-message')?.remove(), 5000);
@@ -171,36 +779,10 @@
             } else {
                 audio.pause();
                 toggleButton.classList.remove('playing');
-                // Ganti ikon menjadi speaker tanpa suara (mute)
                 musicIcon.innerHTML = '<path d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zm-15.5-6v12h4l5 5V1l-5 5H3z"/>';
             }
         }
 
-
-        // Confetti Logic
-        function launchConfetti(){
-            var duration = 3 * 1000;
-            var animationEnd = Date.now() + duration;
-            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
-            function randomInRange(min, max) {
-                return Math.random() * (max - min) + min;
-            }
-
-            var interval = setInterval(function() {
-                var timeLeft = animationEnd - Date.now();
-
-                if (timeLeft <= 0) {
-                    return clearInterval(interval);
-                }
-
-                var particleCount = 50 * (timeLeft / duration);
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-            }, 250);
-        }
-
-        // Form Logic
         document.getElementById('messageForm').addEventListener('submit', function(e){
             e.preventDefault();
             const name = document.getElementById('name').value;
