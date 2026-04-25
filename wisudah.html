@@ -7,15 +7,43 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="web.css">
     <style>
-        /* GAME STYLES */
+        /* ============ GLOBAL ENHANCEMENTS ============ */
+        :root {
+            --accent: #00ff88;
+            --accent-dim: rgba(0,255,136,0.15);
+            --accent-glow: 0 0 20px rgba(0,255,136,0.35);
+        }
+
+        /* Floating particles background */
+        #particles-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 3px; height: 3px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float-particle linear infinite;
+        }
+        @keyframes float-particle {
+            0%   { opacity: 0; transform: translateY(0) scale(0); }
+            10%  { opacity: 0.6; transform: scale(1); }
+            90%  { opacity: 0.3; }
+            100% { opacity: 0; transform: translateY(-100vh) scale(0.5); }
+        }
+
+        /* ============ GAME STYLES (ENHANCED) ============ */
         .game-container {
             display: none;
             animation: fadeIn 0.3s ease;
         }
-
-        .game-container.active {
-            display: block;
-        }
+        .game-container.active { display: block; }
 
         .game-tabs {
             display: flex;
@@ -24,7 +52,6 @@
             flex-wrap: wrap;
             justify-content: center;
         }
-
         .game-tab {
             padding: 12px 25px;
             background: rgba(0, 255, 136, 0.1);
@@ -36,13 +63,11 @@
             transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
             font-size: 0.95rem;
         }
-
         .game-tab:hover {
             border-color: #00ff88;
             background: rgba(0, 255, 136, 0.2);
             transform: translateY(-2px);
         }
-
         .game-tab.active {
             background: linear-gradient(135deg, #00ff88, #00cc6a);
             color: #0e0e0e;
@@ -56,7 +81,6 @@
             align-items: center;
             gap: 20px;
         }
-
         .game-info {
             text-align: center;
             font-size: 0.95rem;
@@ -69,7 +93,6 @@
         #flappyCanvas {
             border: 2px solid #00ff88;
             border-radius: 10px;
-            background: linear-gradient(180deg, #87CEEB 0%, #E0F6FF 100%);
             display: block;
             box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
         }
@@ -81,7 +104,6 @@
             flex-wrap: wrap;
             margin-top: 20px;
         }
-
         .stat {
             text-align: center;
             background: rgba(0, 255, 136, 0.1);
@@ -89,31 +111,19 @@
             border-radius: 10px;
             border: 1px solid rgba(0, 255, 136, 0.3);
         }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: #aaa;
-            margin-bottom: 5px;
-        }
-
-        .stat-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #00ff88;
-        }
+        .stat-label { font-size: 0.85rem; color: #aaa; margin-bottom: 5px; }
+        .stat-value { font-size: 1.8rem; font-weight: 700; color: #00ff88; }
 
         /* MEMORY GAME */
         .memory-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-            gap: 15px;
-            max-width: 400px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            max-width: 380px;
             margin: 0 auto;
         }
-
         .memory-card {
-            width: 80px;
-            height: 80px;
+            width: 80px; height: 80px;
             background: linear-gradient(135deg, #00ff88, #00cc6a);
             border: 2px solid rgba(0, 255, 136, 0.5);
             border-radius: 10px;
@@ -125,22 +135,11 @@
             transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
             box-shadow: 0 4px 15px rgba(0, 255, 136, 0.2);
             user-select: none;
+            perspective: 600px;
         }
-
-        .memory-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 255, 136, 0.4);
-        }
-
-        .memory-card.flipped {
-            background: #1c1c1c;
-            border-color: #00ff88;
-        }
-
-        .memory-card.matched {
-            opacity: 0.5;
-            pointer-events: none;
-        }
+        .memory-card:hover { transform: scale(1.07) rotateY(10deg); box-shadow: 0 8px 25px rgba(0,255,136,0.4); }
+        .memory-card.flipped { background: #1c1c1c; border-color: #00ff88; }
+        .memory-card.matched { opacity: 0.45; pointer-events: none; filter: grayscale(0.3); }
 
         /* SNAKE GAME */
         #snakeCanvas {
@@ -151,16 +150,40 @@
             box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
         }
 
-        .game-controls {
-            margin-top: 20px;
-            text-align: center;
+        /* MOBILE TOUCH D-PAD */
+        .dpad {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            margin-top: 15px;
+        }
+        .dpad-row { display: flex; gap: 5px; }
+        .dpad-btn {
+            width: 54px; height: 54px;
+            background: rgba(0,255,136,0.12);
+            border: 2px solid rgba(0,255,136,0.35);
+            border-radius: 12px;
+            color: #00ff88;
+            font-size: 1.4rem;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            active-transform: scale(0.92);
+            transition: background 0.1s;
+        }
+        .dpad-btn:active { background: rgba(0,255,136,0.3); transform: scale(0.92); }
+
+        /* FLAPPY TOUCH HINT */
+        .tap-hint {
+            font-size: 0.82rem;
             color: #aaa;
-            font-size: 0.9rem;
+            margin-top: 6px;
         }
 
-        .game-controls strong {
-            color: #00ff88;
-        }
+        .game-controls { margin-top: 15px; text-align: center; color: #aaa; font-size: 0.9rem; }
+        .game-controls strong { color: #00ff88; }
 
         .reset-button {
             padding: 12px 30px;
@@ -173,16 +196,10 @@
             font-size: 1rem;
             transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
             box-shadow: 0 6px 20px rgba(0, 255, 136, 0.3);
+            margin-top: 12px;
         }
-
-        .reset-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.5);
-        }
-
-        .reset-button:active {
-            transform: translateY(-1px);
-        }
+        .reset-button:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0, 255, 136, 0.5); }
+        .reset-button:active { transform: translateY(-1px); }
 
         .game-message {
             font-size: 1.2rem;
@@ -191,43 +208,253 @@
             text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
             margin-top: 15px;
             min-height: 30px;
+            animation: pulse-text 1s ease-in-out infinite;
+        }
+        @keyframes pulse-text {
+            0%,100% { text-shadow: 0 0 10px rgba(0,255,136,0.5); }
+            50% { text-shadow: 0 0 20px rgba(0,255,136,0.9); }
         }
 
+        /* ============ AI CHAT WIDGET ============ */
+        #ai-chat-toggle {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 60px; height: 60px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.6rem;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 6px 25px rgba(0,255,136,0.5), 0 0 0 0 rgba(0,255,136,0.4);
+            z-index: 9999;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: ai-ping 2.5s ease-in-out infinite;
+        }
+        @keyframes ai-ping {
+            0%,100% { box-shadow: 0 6px 25px rgba(0,255,136,0.5), 0 0 0 0 rgba(0,255,136,0.3); }
+            50% { box-shadow: 0 6px 25px rgba(0,255,136,0.7), 0 0 0 14px rgba(0,255,136,0); }
+        }
+        #ai-chat-toggle:hover { transform: scale(1.1); }
+        #ai-chat-toggle.open { transform: rotate(90deg) scale(1.05); }
+
+        #ai-chat-badge {
+            position: absolute;
+            top: -4px; right: -4px;
+            width: 18px; height: 18px;
+            background: #ff4444;
+            border-radius: 50%;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            border: 2px solid #0e0e0e;
+            animation: badge-bounce 0.5s ease;
+        }
+        @keyframes badge-bounce { 0%{transform:scale(0)} 60%{transform:scale(1.3)} 100%{transform:scale(1)} }
+
+        #ai-chat-window {
+            position: fixed;
+            bottom: 105px;
+            right: 28px;
+            width: 340px;
+            height: 500px;
+            background: rgba(12,12,12,0.97);
+            border: 1.5px solid rgba(0,255,136,0.3);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 40px rgba(0,255,136,0.1);
+            display: flex;
+            flex-direction: column;
+            z-index: 9998;
+            overflow: hidden;
+            transform: scale(0) translateY(30px);
+            transform-origin: bottom right;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+            opacity: 0;
+            pointer-events: none;
+        }
+        #ai-chat-window.open {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, rgba(0,255,136,0.12), rgba(0,204,106,0.06));
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            border-bottom: 1px solid rgba(0,255,136,0.18);
+        }
+        .chat-avatar-wrap {
+            width: 40px; height: 40px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 0 15px rgba(0,255,136,0.4);
+            animation: avatar-glow 2s ease-in-out infinite;
+        }
+        @keyframes avatar-glow {
+            0%,100% { box-shadow: 0 0 15px rgba(0,255,136,0.4); }
+            50% { box-shadow: 0 0 25px rgba(0,255,136,0.7); }
+        }
+        .chat-header-info h3 { font-size: 0.9rem; color: #fff; font-weight: 600; margin: 0; }
+        .chat-header-info p { font-size: 0.7rem; color: #00ff88; display: flex; align-items: center; gap: 4px; margin: 0; }
+        .online-dot { width: 6px; height: 6px; background: #00ff88; border-radius: 50%; animation: blink-dot 1.5s infinite; }
+        @keyframes blink-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
+        .chat-close {
+            margin-left: auto;
+            background: none; border: none;
+            color: #666; font-size: 1.3rem;
+            cursor: pointer; line-height: 1;
+            transition: color 0.2s;
+        }
+        .chat-close:hover { color: #00ff88; }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0,255,136,0.25) transparent;
+        }
+        .chat-messages::-webkit-scrollbar { width: 4px; }
+        .chat-messages::-webkit-scrollbar-thumb { background: rgba(0,255,136,0.25); border-radius: 4px; }
+
+        .c-msg { display: flex; gap: 7px; align-items: flex-end; animation: msg-in 0.3s ease; }
+        @keyframes msg-in { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform:translateY(0); } }
+        .c-msg.user { flex-direction: row-reverse; }
+
+        .c-msg-avatar {
+            width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+        }
+        .c-msg.user .c-msg-avatar { background: linear-gradient(135deg, #444, #2a2a2a); }
+
+        .c-msg-bubble {
+            max-width: 80%;
+            padding: 9px 13px;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+        .c-msg.ai .c-msg-bubble {
+            background: rgba(0,255,136,0.07);
+            border: 1px solid rgba(0,255,136,0.18);
+            color: #ddd;
+            border-bottom-left-radius: 4px;
+        }
+        .c-msg.user .c-msg-bubble {
+            background: linear-gradient(135deg, rgba(0,255,136,0.18), rgba(0,204,106,0.12));
+            border: 1px solid rgba(0,255,136,0.28);
+            color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-quick-btns {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            padding: 6px 14px;
+        }
+        .c-quick {
+            padding: 5px 10px;
+            background: rgba(0,255,136,0.07);
+            border: 1px solid rgba(0,255,136,0.22);
+            border-radius: 20px;
+            color: #00ff88;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Poppins', sans-serif;
+        }
+        .c-quick:hover { background: rgba(0,255,136,0.18); transform: scale(1.04); }
+
+        .chat-input-row {
+            padding: 10px 14px;
+            border-top: 1px solid rgba(0,255,136,0.12);
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .c-input {
+            flex: 1;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(0,255,136,0.18);
+            border-radius: 22px;
+            padding: 9px 14px;
+            color: #fff;
+            font-size: 0.8rem;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .c-input:focus { border-color: rgba(0,255,136,0.6); }
+        .c-input::placeholder { color: #444; }
+        .c-send {
+            width: 37px; height: 37px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            border: none;
+            border-radius: 50%;
+            color: #0e0e0e;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .c-send:hover { transform: scale(1.12); box-shadow: 0 0 14px rgba(0,255,136,0.5); }
+        .c-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .typing-dots { display: flex; gap: 4px; padding: 9px 13px; }
+        .typing-dots span {
+            width: 6px; height: 6px;
+            background: #00ff88;
+            border-radius: 50%;
+            animation: t-dot 1s infinite;
+        }
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes t-dot { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+        .ai-loading-bar {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ff88, transparent);
+            background-size: 200% 100%;
+            animation: loading-slide 1s linear infinite;
+        }
+        @keyframes loading-slide { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+        /* ============ RESPONSIVE ============ */
         @media(max-width: 768px) {
-            .memory-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 10px;
-                max-width: 100%;
-            }
-
-            .memory-card {
-                width: 100%;
-                height: 70px;
-                font-size: 1.5rem;
-            }
-
-            #flappyCanvas, #snakeCanvas {
-                max-width: 100%;
-                height: auto;
-            }
-
-            .game-tabs {
-                gap: 8px;
-            }
-
-            .game-tab {
-                padding: 10px 20px;
-                font-size: 0.85rem;
-            }
+            .memory-grid { grid-template-columns: repeat(4,1fr); gap: 8px; max-width: 100%; }
+            .memory-card { width: 100%; height: 68px; font-size: 1.4rem; }
+            #flappyCanvas, #snakeCanvas { max-width: 100%; }
+            .game-tabs { gap: 7px; }
+            .game-tab { padding: 9px 18px; font-size: 0.82rem; }
+            .dpad { display: flex !important; }
+            #ai-chat-window { width: calc(100vw - 32px); right: 16px; bottom: 90px; }
+            #ai-chat-toggle { right: 16px; bottom: 16px; }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+        /* Bounce-in for new section items */
+        .score-pop { animation: score-pop 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+        @keyframes score-pop { 0%{transform:scale(1)} 50%{transform:scale(1.5)} 100%{transform:scale(1)} }
     </style>
 </head>
 <body>
+    <!-- Floating particles -->
+    <div id="particles-bg"></div>
+
     <audio id="backgroundMusic" loop>
         Browser Anda tidak mendukung elemen audio.
     </audio>
@@ -294,77 +521,89 @@
                 <img src="image/3.jpg" alt="Foto Wisuda 2">
                 <img src="image/4.jpg" alt="Foto Gaming">
                 <img src="image/5.jpg" alt="Foto Jalan">
-                
-                <img src="image/ml1.jpg" alt="Foto Wisuda">
-                <img src="image/ml2.jpg" alt="Foto Liburan">
-                <img src="image/ff1.jpg" alt="Foto Wisuda 2">
-                <img src="image/ff2.jpg" alt="Foto Gaming">
-                <img src="image/6.jpg" alt="Foto Jalan">
+                <img src="image/ml1.jpg" alt="ML1">
+                <img src="image/ml2.jpg" alt="ML2">
+                <img src="image/ff1.jpg" alt="FF1">
+                <img src="image/ff2.jpg" alt="FF2">
+                <img src="image/6.jpg" alt="Foto Jalan 2">
             </div>
         </div>
     </section>
 
-    <!-- GAME SECTION -->
+    <!-- ============ GAME SECTION ============ -->
     <section class="game reveal" style="text-align:center;">
-        <h2>🎮 Game Arena - Mainkan & Raih Skor Tertinggi!</h2>
+        <h2>🎮 Game Arena — Mainkan & Raih Skor Tertinggi!</h2>
         
         <div class="game-tabs">
-            <button class="game-tab active" onclick="switchGame('flappy')">🐦 Flappy Bird</button>
-            <button class="game-tab" onclick="switchGame('memory')">🧠 Memory Game</button>
-            <button class="game-tab" onclick="switchGame('snake')">🐍 Snake Game</button>
+            <button class="game-tab active" onclick="switchGame('flappy', event)">🐦 Flappy Bird</button>
+            <button class="game-tab" onclick="switchGame('memory', event)">🧠 Memory Game</button>
+            <button class="game-tab" onclick="switchGame('snake', event)">🐍 Snake Game</button>
         </div>
 
-        <!-- FLAPPY BIRD GAME -->
+        <!-- FLAPPY BIRD -->
         <div id="flappy-container" class="game-container active">
-            <p class="game-info">Klik canvas atau tekan SPASI untuk terbang! Hindari pipa! 🎯</p>
+            <p class="game-info">Klik / tap canvas atau tekan <strong style="color:#00ff88">SPASI</strong> untuk terbang! 🎯</p>
             <canvas id="flappyCanvas" width="300" height="400"></canvas>
+            <p class="tap-hint">📱 Mobile: tap canvas untuk loncat!</p>
             <div class="game-stats">
                 <div class="stat">
                     <div class="stat-label">Skor Sekarang</div>
                     <div class="stat-value" id="flappyScore">0</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-label">Skor Terbaik</div>
+                    <div class="stat-label">🏆 Skor Terbaik</div>
                     <div class="stat-value" id="flappyBest">0</div>
                 </div>
             </div>
-            <button class="reset-button" onclick="resetFlappyBird()">Mainkan Lagi</button>
+            <div class="game-message" id="flappyMessage"></div>
+            <button class="reset-button" onclick="resetFlappyBird()">🔄 Mainkan Lagi</button>
         </div>
 
         <!-- MEMORY GAME -->
         <div id="memory-container" class="game-container">
-            <p class="game-info">Temukan semua pasangan emoji! 🎯</p>
+            <p class="game-info">Temukan semua pasangan emoji yang tersembunyi! 🎯</p>
             <div class="game-stats">
                 <div class="stat">
-                    <div class="stat-label">Gerakan</div>
+                    <div class="stat-label">👆 Gerakan</div>
                     <div class="stat-value" id="memoryMoves">0</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-label">Pasangan</div>
+                    <div class="stat-label">✅ Pasangan</div>
                     <div class="stat-value" id="memoryMatched">0/8</div>
                 </div>
             </div>
             <div class="memory-grid" id="memoryGrid"></div>
-            <button class="reset-button" onclick="resetMemoryGame()">Mainkan Lagi</button>
             <div class="game-message" id="memoryMessage"></div>
+            <button class="reset-button" onclick="resetMemoryGame()">🔄 Mainkan Lagi</button>
         </div>
 
         <!-- SNAKE GAME -->
         <div id="snake-container" class="game-container">
-            <p class="game-info">Gunakan ARROW KEYS atau WASD untuk bergerak! 🎯</p>
+            <p class="game-info">Gunakan <strong style="color:#00ff88">ARROW / WASD</strong> untuk bergerak! 🎯</p>
             <canvas id="snakeCanvas" width="300" height="300"></canvas>
+            <!-- Mobile D-Pad -->
+            <div class="dpad" id="snakeDpad">
+                <div class="dpad-row">
+                    <div class="dpad-btn" id="dpad-up" ontouchstart="dpadPress('up')" onmousedown="dpadPress('up')">↑</div>
+                </div>
+                <div class="dpad-row">
+                    <div class="dpad-btn" id="dpad-left" ontouchstart="dpadPress('left')" onmousedown="dpadPress('left')">←</div>
+                    <div class="dpad-btn" id="dpad-down" ontouchstart="dpadPress('down')" onmousedown="dpadPress('down')">↓</div>
+                    <div class="dpad-btn" id="dpad-right" ontouchstart="dpadPress('right')" onmousedown="dpadPress('right')">→</div>
+                </div>
+            </div>
             <div class="game-stats">
                 <div class="stat">
                     <div class="stat-label">Skor Sekarang</div>
                     <div class="stat-value" id="snakeScore">0</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-label">Skor Terbaik</div>
+                    <div class="stat-label">🏆 Skor Terbaik</div>
                     <div class="stat-value" id="snakeBest">0</div>
                 </div>
             </div>
-            <button class="reset-button" onclick="resetSnakeGame()">Mainkan Lagi</button>
             <div class="game-message" id="snakeMessage"></div>
+            <button class="reset-button" onclick="resetSnakeGame()">🔄 Mainkan Lagi</button>
         </div>
     </section>
 
@@ -411,7 +650,7 @@
     </section>
 
     <footer>
-        <p>&copy; Di buat oleh BUng Clone Tahun 2025 @Bung-Clone </p>
+        <p>&copy; Di buat oleh BUng Clone Tahun 2025 @Bung-Clone</p>
         <div class="social-footer">
             <a href="https://www.instagram.com/bung_clonee?igsh=NDlyMXpmeXd5cnVt" target="_blank" class="footer-instagram-link">
                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37"></path><circle cx="17.5" cy="6.5" r="1.5"></circle></svg>
@@ -424,401 +663,659 @@
         </div>
     </footer>
 
+    <!-- ============ AI CHAT WIDGET ============ -->
+    <button id="ai-chat-toggle" onclick="toggleChat()" title="Chat dengan Clone AI">
+        <span id="chat-icon">🤖</span>
+        <span id="ai-chat-badge">1</span>
+    </button>
+
+    <div id="ai-chat-window">
+        <div class="chat-header">
+            <div class="chat-avatar-wrap">🤖</div>
+            <div class="chat-header-info">
+                <h3>Clone AI 💚</h3>
+                <p><span class="online-dot"></span> Online — Siap ngobrol!</p>
+            </div>
+            <button class="chat-close" onclick="toggleChat()">✕</button>
+        </div>
+        <div id="ai-loading-bar" class="ai-loading-bar" style="display:none;"></div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-quick-btns" id="chatQuicks">
+            <button class="c-quick" onclick="quickSend('Cerita tentang Arif & Fisah!')">👫 Tentang mereka</button>
+            <button class="c-quick" onclick="quickSend('Kasih jokes lucu dong!')">😂 Jokes!</button>
+            <button class="c-quick" onclick="quickSend('Tips gaming FF ML dong!')">🎮 Gaming tips</button>
+            <button class="c-quick" onclick="quickSend('Beri aku quote motivasi!')">✨ Motivasi</button>
+        </div>
+        <div class="chat-input-row">
+            <input class="c-input" id="chatInput" placeholder="Ketik pesan..." 
+                onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();sendAIMsg();}">
+            <button class="c-send" id="sendBtn" onclick="sendAIMsg()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            </button>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <script>
-        // ============ GAME SWITCHER ============
-        function switchGame(game) {
-            document.querySelectorAll('.game-container').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.game-tab').forEach(el => el.classList.remove('active'));
-            
-            document.getElementById(game + '-container').classList.add('active');
-            event.target.classList.add('active');
+    // ============ PARTICLES ============
+    (function spawnParticles() {
+        const bg = document.getElementById('particles-bg');
+        for (let i = 0; i < 22; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.bottom = '-10px';
+            p.style.width = p.style.height = (Math.random() * 3 + 1) + 'px';
+            const dur = Math.random() * 12 + 8;
+            p.style.animationDuration = dur + 's';
+            p.style.animationDelay = Math.random() * dur + 's';
+            bg.appendChild(p);
+        }
+    })();
+
+    // ============ GAME SWITCHER ============
+    function switchGame(game, e) {
+        document.querySelectorAll('.game-container').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.game-tab').forEach(el => el.classList.remove('active'));
+        document.getElementById(game + '-container').classList.add('active');
+        if (e && e.target) e.target.classList.add('active');
+        // Show dpad only on snake
+        document.getElementById('snakeDpad').style.display = (game === 'snake') ? 'flex' : 'none';
+    }
+
+    // ============ FLAPPY BIRD ============
+    const flappyCanvas = document.getElementById('flappyCanvas');
+    const flappyCtx = flappyCanvas.getContext('2d');
+
+    let flappyBird = { x: 60, y: 180, velocity: 0, gravity: 0.55, jumpPower: -11 };
+    let flappyPipes = [];
+    let flappyScore = 0;
+    let flappyBestScore = parseInt(localStorage.getItem('flappyBest') || '0');
+    let flappyGameRunning = false;
+    let flappyStarted = false;
+    let flappyRAF;
+
+    document.getElementById('flappyBest').textContent = flappyBestScore;
+
+    function createFlappyPipe() {
+        const gap = 110;
+        const minY = 60;
+        const maxY = flappyCanvas.height - gap - 60;
+        const pipeY = Math.random() * (maxY - minY) + minY;
+        flappyPipes.push({ x: flappyCanvas.width, topHeight: pipeY, bottomY: pipeY + gap, width: 48, scored: false });
+    }
+
+    function drawCloud(x, y, s) {
+        flappyCtx.fillStyle = 'rgba(255,255,255,0.7)';
+        flappyCtx.beginPath();
+        flappyCtx.arc(x, y, s, 0, Math.PI * 2);
+        flappyCtx.arc(x + s * 0.9, y - s * 0.3, s * 0.7, 0, Math.PI * 2);
+        flappyCtx.arc(x + s * 1.7, y, s * 0.8, 0, Math.PI * 2);
+        flappyCtx.fill();
+    }
+
+    function drawFlappyScene() {
+        // Sky gradient
+        const sky = flappyCtx.createLinearGradient(0, 0, 0, flappyCanvas.height);
+        sky.addColorStop(0, '#87CEEB');
+        sky.addColorStop(1, '#E0F6FF');
+        flappyCtx.fillStyle = sky;
+        flappyCtx.fillRect(0, 0, flappyCanvas.width, flappyCanvas.height);
+
+        // Clouds
+        drawCloud(40, 50, 16);
+        drawCloud(180, 35, 20);
+        drawCloud(250, 70, 14);
+
+        // Ground
+        flappyCtx.fillStyle = '#8BC34A';
+        flappyCtx.fillRect(0, flappyCanvas.height - 20, flappyCanvas.width, 20);
+        flappyCtx.fillStyle = '#7CB342';
+        flappyCtx.fillRect(0, flappyCanvas.height - 20, flappyCanvas.width, 5);
+    }
+
+    function drawFlappyBird() {
+        flappyCtx.save();
+        flappyCtx.translate(flappyBird.x, flappyBird.y);
+        // Tilt
+        const angle = Math.min(Math.max(flappyBird.velocity * 3, -30), 60);
+        flappyCtx.rotate(angle * Math.PI / 180);
+
+        // Body
+        flappyCtx.fillStyle = '#FFD700';
+        flappyCtx.beginPath();
+        flappyCtx.ellipse(0, 0, 16, 13, 0, 0, Math.PI * 2);
+        flappyCtx.fill();
+        // Wing
+        flappyCtx.fillStyle = '#FFA500';
+        flappyCtx.beginPath();
+        flappyCtx.ellipse(-5, 3, 8, 5, -0.5, 0, Math.PI * 2);
+        flappyCtx.fill();
+        // Eye
+        flappyCtx.fillStyle = '#fff';
+        flappyCtx.beginPath();
+        flappyCtx.arc(7, -4, 5, 0, Math.PI * 2);
+        flappyCtx.fill();
+        flappyCtx.fillStyle = '#111';
+        flappyCtx.beginPath();
+        flappyCtx.arc(8.5, -4, 3, 0, Math.PI * 2);
+        flappyCtx.fill();
+        // Beak
+        flappyCtx.fillStyle = '#FF6F00';
+        flappyCtx.beginPath();
+        flappyCtx.moveTo(14, -1); flappyCtx.lineTo(20, 2); flappyCtx.lineTo(14, 5);
+        flappyCtx.closePath();
+        flappyCtx.fill();
+        flappyCtx.restore();
+    }
+
+    function drawFlappyPipes() {
+        flappyPipes.forEach(pipe => {
+            // Pipe gradient
+            const pipeGrad = flappyCtx.createLinearGradient(pipe.x, 0, pipe.x + pipe.width, 0);
+            pipeGrad.addColorStop(0, '#00cc6a');
+            pipeGrad.addColorStop(0.5, '#00ff88');
+            pipeGrad.addColorStop(1, '#009944');
+            flappyCtx.fillStyle = pipeGrad;
+            // Top pipe
+            flappyCtx.fillRect(pipe.x, 0, pipe.width, pipe.topHeight);
+            // Cap top
+            flappyCtx.fillRect(pipe.x - 4, pipe.topHeight - 18, pipe.width + 8, 18);
+            // Bottom pipe
+            flappyCtx.fillRect(pipe.x, pipe.bottomY, pipe.width, flappyCanvas.height - pipe.bottomY);
+            // Cap bottom
+            flappyCtx.fillRect(pipe.x - 4, pipe.bottomY, pipe.width + 8, 18);
+        });
+    }
+
+    function flappyLoop() {
+        if (!flappyGameRunning) return;
+
+        flappyBird.velocity += flappyBird.gravity;
+        flappyBird.y += flappyBird.velocity;
+
+        // Ground / ceiling
+        if (flappyBird.y + 13 >= flappyCanvas.height - 20 || flappyBird.y - 13 <= 0) {
+            endFlappyGame(); return;
         }
 
-        // ============ FLAPPY BIRD GAME ============
-        const flappyCanvas = document.getElementById('flappyCanvas');
-        const flappyCtx = flappyCanvas.getContext('2d');
-        
-        let flappyBird = {
-            x: 50,
-            y: 150,
-            width: 30,
-            height: 30,
-            velocity: 0,
-            gravity: 0.6,
-            jumpPower: -12
-        };
-
-        let flappyPipes = [];
-        let flappyScore = 0;
-        let flappyBestScore = localStorage.getItem('flappyBest') || 0;
-        let flappyGameRunning = true;
-        let flappyGameOver = false;
-
-        document.getElementById('flappyBest').textContent = flappyBestScore;
-
-        function createFlappyPipe() {
-            const gap = 100;
-            const minY = 50;
-            const maxY = flappyCanvas.height - gap - 50;
-            const pipeY = Math.random() * (maxY - minY) + minY;
-            
-            flappyPipes.push({
-                x: flappyCanvas.width,
-                topHeight: pipeY,
-                bottomY: pipeY + gap,
-                width: 50,
-                scored: false
-            });
+        // Pipes
+        if (flappyPipes.length === 0 || flappyPipes[flappyPipes.length - 1].x < flappyCanvas.width - 160) {
+            createFlappyPipe();
         }
 
-        function drawFlappyBird() {
-            flappyCtx.fillStyle = '#FFD700';
-            flappyCtx.beginPath();
-            flappyCtx.arc(flappyBird.x, flappyBird.y, 15, 0, Math.PI * 2);
-            flappyCtx.fill();
-            
-            flappyCtx.fillStyle = '#000';
-            flappyCtx.beginPath();
-            flappyCtx.arc(flappyBird.x + 8, flappyBird.y - 5, 4, 0, Math.PI * 2);
-            flappyCtx.fill();
-        }
-
-        function drawFlappyPipes() {
-            flappyCtx.fillStyle = '#00ff88';
-            flappyPipes.forEach(pipe => {
-                flappyCtx.fillRect(pipe.x, 0, pipe.width, pipe.topHeight);
-                flappyCtx.fillRect(pipe.x, pipe.bottomY, pipe.width, flappyCanvas.height - pipe.bottomY);
-            });
-        }
-
-        function updateFlappyGame() {
-            if (!flappyGameRunning) return;
-
-            flappyBird.velocity += flappyBird.gravity;
-            flappyBird.y += flappyBird.velocity;
-
-            if (flappyBird.y + 15 >= flappyCanvas.height || flappyBird.y - 15 <= 0) {
-                endFlappyGame();
-                return;
+        flappyPipes.forEach(pipe => {
+            pipe.x -= 3.5;
+            if (!pipe.scored && pipe.x + pipe.width < flappyBird.x) {
+                pipe.scored = true;
+                flappyScore++;
+                const el = document.getElementById('flappyScore');
+                el.textContent = flappyScore;
+                el.classList.add('score-pop');
+                setTimeout(() => el.classList.remove('score-pop'), 400);
             }
-
-            flappyPipes.forEach((pipe, index) => {
-                pipe.x -= 5;
-
-                if (!pipe.scored && pipe.x + pipe.width < flappyBird.x) {
-                    pipe.scored = true;
-                    flappyScore++;
-                    document.getElementById('flappyScore').textContent = flappyScore;
+            // Collision
+            if (flappyBird.x + 14 > pipe.x && flappyBird.x - 14 < pipe.x + pipe.width) {
+                if (flappyBird.y - 13 < pipe.topHeight || flappyBird.y + 13 > pipe.bottomY) {
+                    endFlappyGame(); return;
                 }
-
-                if (flappyBird.x + 15 > pipe.x && flappyBird.x - 15 < pipe.x + pipe.width) {
-                    if (flappyBird.y - 15 < pipe.topHeight || flappyBird.y + 15 > pipe.bottomY) {
-                        endFlappyGame();
-                        return;
-                    }
-                }
-            });
-
-            flappyPipes = flappyPipes.filter(pipe => pipe.x + pipe.width > 0);
-
-            if (flappyPipes.length < 4) {
-                createFlappyPipe();
             }
-
-            flappyCtx.clearRect(0, 0, flappyCanvas.width, flappyCanvas.height);
-            drawFlappyBird();
-            drawFlappyPipes();
-
-            requestAnimationFrame(updateFlappyGame);
-        }
-
-        function endFlappyGame() {
-            flappyGameRunning = false;
-            if (flappyScore > flappyBestScore) {
-                flappyBestScore = flappyScore;
-                localStorage.setItem('flappyBest', flappyBestScore);
-                document.getElementById('flappyBest').textContent = flappyBestScore;
-            }
-        }
-
-        function resetFlappyBird() {
-            flappyBird.y = 150;
-            flappyBird.velocity = 0;
-            flappyScore = 0;
-            flappyPipes = [];
-            flappyGameRunning = true;
-            document.getElementById('flappyScore').textContent = 0;
-            updateFlappyGame();
-        }
-
-        flappyCanvas.addEventListener('click', () => {
-            if (flappyGameRunning) flappyBird.velocity = flappyBird.jumpPower;
         });
 
-        document.addEventListener('keydown', (e) => {
-            if (e.code === 'Space' && flappyGameRunning) {
-                flappyBird.velocity = flappyBird.jumpPower;
-                e.preventDefault();
-            }
+        flappyPipes = flappyPipes.filter(p => p.x + p.width > 0);
+
+        drawFlappyScene();
+        drawFlappyPipes();
+        drawFlappyBird();
+
+        // Score overlay
+        flappyCtx.fillStyle = 'rgba(0,0,0,0.55)';
+        flappyCtx.fillRect(8, 8, 80, 28);
+        flappyCtx.fillStyle = '#00ff88';
+        flappyCtx.font = 'bold 14px Poppins, sans-serif';
+        flappyCtx.fillText('⭐ ' + flappyScore, 14, 27);
+
+        flappyRAF = requestAnimationFrame(flappyLoop);
+    }
+
+    function endFlappyGame() {
+        flappyGameRunning = false;
+        cancelAnimationFrame(flappyRAF);
+        if (flappyScore > flappyBestScore) {
+            flappyBestScore = flappyScore;
+            localStorage.setItem('flappyBest', flappyBestScore);
+            document.getElementById('flappyBest').textContent = flappyBestScore;
+            confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
+        }
+        // Draw game over screen
+        drawFlappyScene();
+        drawFlappyPipes();
+        drawFlappyBird();
+        flappyCtx.fillStyle = 'rgba(0,0,0,0.6)';
+        flappyCtx.fillRect(0, 130, flappyCanvas.width, 140);
+        flappyCtx.fillStyle = '#00ff88';
+        flappyCtx.font = 'bold 22px Poppins, sans-serif';
+        flappyCtx.textAlign = 'center';
+        flappyCtx.fillText('Game Over! 😵', flappyCanvas.width / 2, 175);
+        flappyCtx.fillStyle = '#fff';
+        flappyCtx.font = '14px Poppins, sans-serif';
+        flappyCtx.fillText('Skor: ' + flappyScore + ' | Best: ' + flappyBestScore, flappyCanvas.width / 2, 205);
+        flappyCtx.fillStyle = '#aaa';
+        flappyCtx.font = '12px Poppins, sans-serif';
+        flappyCtx.fillText('Tap/Klik "Mainkan Lagi" 👇', flappyCanvas.width / 2, 240);
+        flappyCtx.textAlign = 'left';
+        document.getElementById('flappyMessage').textContent = flappyScore > 0 ? '🎉 Skor: ' + flappyScore : '💪 Coba lagi, bisa!';
+    }
+
+    function flappyJump() {
+        if (!flappyGameRunning) return;
+        flappyBird.velocity = flappyBird.jumpPower;
+    }
+
+    function resetFlappyBird() {
+        cancelAnimationFrame(flappyRAF);
+        flappyBird.y = 180; flappyBird.velocity = 0;
+        flappyScore = 0; flappyPipes = [];
+        flappyGameRunning = true;
+        document.getElementById('flappyScore').textContent = 0;
+        document.getElementById('flappyMessage').textContent = '';
+        flappyLoop();
+    }
+
+    flappyCanvas.addEventListener('click', flappyJump);
+    flappyCanvas.addEventListener('touchstart', (e) => { e.preventDefault(); flappyJump(); }, { passive: false });
+    document.addEventListener('keydown', (e) => {
+        if (e.code === 'Space') { flappyJump(); e.preventDefault(); }
+    });
+
+    // Draw initial scene
+    drawFlappyScene();
+    flappyCtx.fillStyle = '#333';
+    flappyCtx.font = 'bold 16px Poppins, sans-serif';
+    flappyCtx.textAlign = 'center';
+    flappyCtx.fillText('Tap / Klik untuk mulai! 🐦', flappyCanvas.width / 2, flappyCanvas.height / 2);
+    flappyCtx.textAlign = 'left';
+
+    setTimeout(() => resetFlappyBird(), 500);
+
+    // ============ MEMORY GAME ============
+    const emojis = ['🍎','🍎','🍌','🍌','🍒','🍒','🍊','🍊','🍉','🍉','🍓','🍓','🥝','🥝','🍑','🍑'];
+    let flippedCards = [], matchedPairs = 0, memoryMoves = 0, memoryCanFlip = true;
+
+    function initMemoryGame() {
+        const shuffled = [...emojis].sort(() => Math.random() - 0.5);
+        const grid = document.getElementById('memoryGrid');
+        grid.innerHTML = '';
+        flippedCards = []; matchedPairs = 0; memoryMoves = 0; memoryCanFlip = true;
+        document.getElementById('memoryMoves').textContent = 0;
+        document.getElementById('memoryMatched').textContent = '0/8';
+        document.getElementById('memoryMessage').textContent = '';
+
+        shuffled.forEach((emoji, i) => {
+            const card = document.createElement('div');
+            card.className = 'memory-card';
+            card.dataset.emoji = emoji;
+            card.dataset.index = i;
+            card.textContent = '?';
+            card.addEventListener('click', () => flipMemoryCard(card));
+            grid.appendChild(card);
         });
+    }
 
-        resetFlappyBird();
+    function flipMemoryCard(card) {
+        if (!memoryCanFlip || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+        card.classList.add('flipped');
+        card.textContent = card.dataset.emoji;
+        flippedCards.push(card);
 
-        // ============ MEMORY GAME ============
-        const emojis = ['🍎', '🍎', '🍌', '🍌', '🍒', '🍒', '🍊', '🍊', '🍉', '🍉', '🍓', '🍓', '🥝', '🥝', '🍑', '🍑'];
-        let memoryCards = [];
-        let flippedCards = [];
-        let matchedPairs = 0;
-        let memoryMoves = 0;
-        let memoryCanFlip = true;
+        if (flippedCards.length === 2) {
+            memoryCanFlip = false;
+            memoryMoves++;
+            document.getElementById('memoryMoves').textContent = memoryMoves;
 
-        function initMemoryGame() {
-            const shuffled = [...emojis].sort(() => Math.random() - 0.5);
-            const grid = document.getElementById('memoryGrid');
-            grid.innerHTML = '';
-            memoryCards = [];
-            flippedCards = [];
-            matchedPairs = 0;
-            memoryMoves = 0;
-            memoryCanFlip = true;
-            document.getElementById('memoryMoves').textContent = 0;
-            document.getElementById('memoryMatched').textContent = '0/8';
-            document.getElementById('memoryMessage').textContent = '';
+            if (flippedCards[0].dataset.emoji === flippedCards[1].dataset.emoji) {
+                flippedCards[0].classList.add('matched');
+                flippedCards[1].classList.add('matched');
+                matchedPairs++;
+                document.getElementById('memoryMatched').textContent = matchedPairs + '/8';
+                flippedCards = []; memoryCanFlip = true;
 
-            shuffled.forEach((emoji, index) => {
-                const card = document.createElement('div');
-                card.className = 'memory-card';
-                card.dataset.emoji = emoji;
-                card.dataset.index = index;
-                card.textContent = '?';
-                card.addEventListener('click', () => flipMemoryCard(card));
-                grid.appendChild(card);
-                memoryCards.push(card);
-            });
-        }
-
-        function flipMemoryCard(card) {
-            if (!memoryCanFlip || card.classList.contains('flipped') || card.classList.contains('matched')) return;
-
-            card.classList.add('flipped');
-            card.textContent = card.dataset.emoji;
-            flippedCards.push(card);
-
-            if (flippedCards.length === 2) {
-                memoryCanFlip = false;
-                memoryMoves++;
-                document.getElementById('memoryMoves').textContent = memoryMoves;
-
-                if (flippedCards[0].dataset.emoji === flippedCards[1].dataset.emoji) {
-                    flippedCards[0].classList.add('matched');
-                    flippedCards[1].classList.add('matched');
-                    matchedPairs++;
-                    document.getElementById('memoryMatched').textContent = matchedPairs + '/8';
-                    flippedCards = [];
-                    memoryCanFlip = true;
-
-                    if (matchedPairs === 8) {
-                        document.getElementById('memoryMessage').textContent = `🎉 Kamu Menang! ${memoryMoves} Gerakan`;
-                    }
-                } else {
-                    setTimeout(() => {
-                        flippedCards[0].classList.remove('flipped');
-                        flippedCards[1].classList.remove('flipped');
-                        flippedCards[0].textContent = '?';
-                        flippedCards[1].textContent = '?';
-                        flippedCards = [];
-                        memoryCanFlip = true;
-                    }, 800);
+                if (matchedPairs === 8) {
+                    document.getElementById('memoryMessage').textContent = '🎉 Kamu Menang! ' + memoryMoves + ' Gerakan';
+                    confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 } });
                 }
-            }
-        }
-
-        function resetMemoryGame() {
-            initMemoryGame();
-        }
-
-        initMemoryGame();
-
-        // ============ SNAKE GAME ============
-        const snakeCanvas = document.getElementById('snakeCanvas');
-        const snakeCtx = snakeCanvas.getContext('2d');
-        
-        const gridSize = 20;
-        let snake = [{x: 150, y: 150}];
-        let food = {x: Math.random() * 15 | 0, y: Math.random() * 15 | 0};
-        food.x *= gridSize;
-        food.y *= gridSize;
-        let snakeDirection = {x: gridSize, y: 0};
-        let nextDirection = {x: gridSize, y: 0};
-        let snakeScore = 0;
-        let snakeBestScore = localStorage.getItem('snakeBest') || 0;
-        let snakeGameRunning = true;
-
-        document.getElementById('snakeBest').textContent = snakeBestScore;
-
-        function drawSnakeGame() {
-            snakeCtx.fillStyle = '#0a0a0a';
-            snakeCtx.fillRect(0, 0, snakeCanvas.width, snakeCanvas.height);
-
-            snakeCtx.fillStyle = '#00ff88';
-            snake.forEach(segment => {
-                snakeCtx.fillRect(segment.x, segment.y, gridSize - 2, gridSize - 2);
-            });
-
-            snakeCtx.fillStyle = '#ff0000';
-            snakeCtx.fillRect(food.x, food.y, gridSize - 2, gridSize - 2);
-        }
-
-        function updateSnakeGame() {
-            if (!snakeGameRunning) return;
-
-            snakeDirection = nextDirection;
-            const head = {x: snake[0].x + snakeDirection.x, y: snake[0].y + snakeDirection.y};
-
-            if (head.x < 0 || head.x >= snakeCanvas.width || head.y < 0 || head.y >= snakeCanvas.height) {
-                endSnakeGame();
-                return;
-            }
-
-            for (let i = 0; i < snake.length; i++) {
-                if (head.x === snake[i].x && head.y === snake[i].y) {
-                    endSnakeGame();
-                    return;
-                }
-            }
-
-            snake.unshift(head);
-
-            if (head.x === food.x && head.y === food.y) {
-                snakeScore += 10;
-                document.getElementById('snakeScore').textContent = snakeScore;
-                food.x = (Math.random() * 15 | 0) * gridSize;
-                food.y = (Math.random() * 15 | 0) * gridSize;
             } else {
-                snake.pop();
+                setTimeout(() => {
+                    flippedCards[0].classList.remove('flipped');
+                    flippedCards[1].classList.remove('flipped');
+                    flippedCards[0].textContent = '?';
+                    flippedCards[1].textContent = '?';
+                    flippedCards = []; memoryCanFlip = true;
+                }, 800);
             }
-
-            drawSnakeGame();
-            setTimeout(updateSnakeGame, 100);
         }
+    }
 
-        function endSnakeGame() {
-            snakeGameRunning = false;
-            if (snakeScore > snakeBestScore) {
-                snakeBestScore = snakeScore;
-                localStorage.setItem('snakeBest', snakeBestScore);
-                document.getElementById('snakeBest').textContent = snakeBestScore;
-            }
-            document.getElementById('snakeMessage').textContent = `Game Over! Skor: ${snakeScore}`;
-        }
+    function resetMemoryGame() { initMemoryGame(); }
+    initMemoryGame();
 
-        function resetSnakeGame() {
-            snake = [{x: 150, y: 150}];
-            food = {x: (Math.random() * 15 | 0) * gridSize, y: (Math.random() * 15 | 0) * gridSize};
-            snakeDirection = {x: gridSize, y: 0};
-            nextDirection = {x: gridSize, y: 0};
-            snakeScore = 0;
-            snakeGameRunning = true;
-            document.getElementById('snakeScore').textContent = 0;
-            document.getElementById('snakeMessage').textContent = '';
-            updateSnakeGame();
-        }
+    // ============ SNAKE GAME ============
+    const snakeCanvas = document.getElementById('snakeCanvas');
+    const snakeCtx = snakeCanvas.getContext('2d');
+    const gridSize = 20;
 
-        document.addEventListener('keydown', (e) => {
-            if (!snakeGameRunning) return;
-            
-            switch(e.key) {
-                case 'ArrowUp':
-                case 'w':
-                case 'W':
-                    if (snakeDirection.y === 0) nextDirection = {x: 0, y: -gridSize};
-                    e.preventDefault();
-                    break;
-                case 'ArrowDown':
-                case 's':
-                case 'S':
-                    if (snakeDirection.y === 0) nextDirection = {x: 0, y: gridSize};
-                    e.preventDefault();
-                    break;
-                case 'ArrowLeft':
-                case 'a':
-                case 'A':
-                    if (snakeDirection.x === 0) nextDirection = {x: -gridSize, y: 0};
-                    e.preventDefault();
-                    break;
-                case 'ArrowRight':
-                case 'd':
-                case 'D':
-                    if (snakeDirection.x === 0) nextDirection = {x: gridSize, y: 0};
-                    e.preventDefault();
-                    break;
+    let snake, food, snakeDir, nextDir, snakeScore, snakeBestScore, snakeRunning, snakeTimer;
+    snakeBestScore = parseInt(localStorage.getItem('snakeBest') || '0');
+    document.getElementById('snakeBest').textContent = snakeBestScore;
+
+    function randomFood() {
+        let fx, fy, onSnake;
+        do {
+            fx = (Math.random() * (snakeCanvas.width / gridSize) | 0) * gridSize;
+            fy = (Math.random() * (snakeCanvas.height / gridSize) | 0) * gridSize;
+            onSnake = snake.some(s => s.x === fx && s.y === fy);
+        } while (onSnake);
+        return { x: fx, y: fy };
+    }
+
+    function initSnake() {
+        snake = [{ x: 140, y: 140 }, { x: 120, y: 140 }, { x: 100, y: 140 }];
+        snakeDir = { x: gridSize, y: 0 };
+        nextDir = { x: gridSize, y: 0 };
+        snakeScore = 0;
+        snakeRunning = true;
+        food = randomFood();
+        document.getElementById('snakeScore').textContent = 0;
+        document.getElementById('snakeMessage').textContent = '';
+    }
+
+    function drawSnakeGame() {
+        snakeCtx.fillStyle = '#080808';
+        snakeCtx.fillRect(0, 0, snakeCanvas.width, snakeCanvas.height);
+
+        // Grid dots
+        snakeCtx.fillStyle = 'rgba(0,255,136,0.05)';
+        for (let x = 0; x < snakeCanvas.width; x += gridSize)
+            for (let y = 0; y < snakeCanvas.height; y += gridSize)
+                snakeCtx.fillRect(x + 9, y + 9, 2, 2);
+
+        // Snake with gradient
+        snake.forEach((seg, i) => {
+            const alpha = 1 - (i / snake.length) * 0.5;
+            snakeCtx.fillStyle = i === 0
+                ? '#00ff88'
+                : `rgba(0,${Math.round(200 - i * 4)},${Math.round(100 - i * 2)},${alpha})`;
+            snakeCtx.beginPath();
+            snakeCtx.roundRect(seg.x + 1, seg.y + 1, gridSize - 2, gridSize - 2, 4);
+            snakeCtx.fill();
+            if (i === 0) {
+                // Eyes
+                snakeCtx.fillStyle = '#0a0a0a';
+                const eyeOff = snakeDir.x !== 0 ? [{ dx: 6, dy: 3 }, { dx: 6, dy: 14 }] : [{ dx: 3, dy: 6 }, { dx: 14, dy: 6 }];
+                eyeOff.forEach(e => {
+                    snakeCtx.beginPath();
+                    snakeCtx.arc(seg.x + e.dx, seg.y + e.dy, 2.5, 0, Math.PI * 2);
+                    snakeCtx.fill();
+                });
             }
         });
+
+        // Food (pulsing)
+        const pulse = 0.8 + 0.2 * Math.sin(Date.now() / 200);
+        snakeCtx.fillStyle = '#ff4444';
+        snakeCtx.shadowColor = '#ff4444';
+        snakeCtx.shadowBlur = 10 * pulse;
+        snakeCtx.beginPath();
+        snakeCtx.roundRect(food.x + 2, food.y + 2, gridSize - 4, gridSize - 4, 4);
+        snakeCtx.fill();
+        snakeCtx.shadowBlur = 0;
+
+        // Score overlay
+        snakeCtx.fillStyle = 'rgba(0,0,0,0.5)';
+        snakeCtx.fillRect(4, 4, 75, 24);
+        snakeCtx.fillStyle = '#00ff88';
+        snakeCtx.font = '12px Poppins, sans-serif';
+        snakeCtx.fillText('⭐ ' + snakeScore, 10, 20);
+    }
+
+    function updateSnakeGame() {
+        if (!snakeRunning) return;
+        snakeDir = { ...nextDir };
+        const head = { x: snake[0].x + snakeDir.x, y: snake[0].y + snakeDir.y };
+
+        if (head.x < 0 || head.x >= snakeCanvas.width || head.y < 0 || head.y >= snakeCanvas.height) {
+            endSnakeGame(); return;
+        }
+        if (snake.some(s => s.x === head.x && s.y === head.y)) {
+            endSnakeGame(); return;
+        }
+
+        snake.unshift(head);
+        if (head.x === food.x && head.y === food.y) {
+            snakeScore += 10;
+            const el = document.getElementById('snakeScore');
+            el.textContent = snakeScore;
+            el.classList.add('score-pop');
+            setTimeout(() => el.classList.remove('score-pop'), 400);
+            food = randomFood();
+        } else {
+            snake.pop();
+        }
 
         drawSnakeGame();
+        snakeTimer = setTimeout(updateSnakeGame, Math.max(55, 105 - snake.length * 2));
+    }
+
+    function endSnakeGame() {
+        snakeRunning = false;
+        clearTimeout(snakeTimer);
+        if (snakeScore > snakeBestScore) {
+            snakeBestScore = snakeScore;
+            localStorage.setItem('snakeBest', snakeBestScore);
+            document.getElementById('snakeBest').textContent = snakeBestScore;
+            confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
+        }
+        document.getElementById('snakeMessage').textContent = '💥 Game Over! Skor: ' + snakeScore;
+    }
+
+    function resetSnakeGame() {
+        clearTimeout(snakeTimer);
+        initSnake();
         updateSnakeGame();
+    }
 
-        // ============ MUSIK & FORM ============
-        function toggleMusic() {
-            const audio = document.getElementById('backgroundMusic');
-            const toggleButton = document.getElementById('musicToggle');
-            const musicIcon = document.getElementById('musicIcon');
+    // D-pad mobile controls
+    function dpadPress(dir) {
+        if (!snakeRunning) return;
+        if (dir === 'up'    && snakeDir.y === 0) nextDir = { x: 0, y: -gridSize };
+        if (dir === 'down'  && snakeDir.y === 0) nextDir = { x: 0, y: gridSize };
+        if (dir === 'left'  && snakeDir.x === 0) nextDir = { x: -gridSize, y: 0 };
+        if (dir === 'right' && snakeDir.x === 0) nextDir = { x: gridSize, y: 0 };
+    }
 
-            if (audio.paused) {
-                audio.play().then(() => {
-                    toggleButton.classList.add('playing');
-                    musicIcon.innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM19 12c0-2.88-1.63-5.36-4.01-6.63v13.26c2.38-1.27 4.01-3.75 4.01-6.63z"/>';
-                }).catch(error => {
-                    console.error("Gagal memutar audio:", error);
-                    const messageArea = document.querySelector('header');
-                    messageArea.insertAdjacentHTML('afterend', '<div class="alert-message">Gagal memutar musik. Pastikan Anda telah mengganti link MP3 dengan link yang valid.</div>');
-                    setTimeout(() => document.querySelector('.alert-message')?.remove(), 5000);
-                });
-            } else {
-                audio.pause();
-                toggleButton.classList.remove('playing');
-                musicIcon.innerHTML = '<path d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zm-15.5-6v12h4l5 5V1l-5 5H3z"/>';
-            }
+    document.addEventListener('keydown', (e) => {
+        if (!snakeRunning) return;
+        const map = {
+            'ArrowUp': 'up', 'w': 'up', 'W': 'up',
+            'ArrowDown': 'down', 's': 'down', 'S': 'down',
+            'ArrowLeft': 'left', 'a': 'left', 'A': 'left',
+            'ArrowRight': 'right', 'd': 'right', 'D': 'right',
+        };
+        if (map[e.key]) { dpadPress(map[e.key]); e.preventDefault(); }
+    });
+
+    // Swipe support for snake canvas
+    let touchStartX = 0, touchStartY = 0;
+    snakeCanvas.addEventListener('touchstart', e => {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    snakeCanvas.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        const dy = e.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(dx) > Math.abs(dy)) {
+            dpadPress(dx > 0 ? 'right' : 'left');
+        } else {
+            dpadPress(dy > 0 ? 'down' : 'up');
+        }
+    }, { passive: true });
+
+    initSnake();
+    drawSnakeGame();
+    setTimeout(() => updateSnakeGame(), 300);
+
+    // ============ AI CHAT ============
+    let chatOpen = false;
+    let aiThinking = false;
+    let chatHistory = [];
+
+    const SYSTEM_PROMPT = `Kamu adalah "Clone AI" — asisten digital pribadi milik Arif dan Fisah. 
+Kamu berkarakter santai, friendly, seru, dan sedikit gokil tapi tetap helpful. 
+Gunakan bahasa Indonesia casual (boleh campur sedikit bahasa gaul). Pakai emoji sesekali.
+
+Info penting yang kamu tahu:
+- Muh. Arifatwa (S.Kom) — gamer, tech lover, akun FF "Kang-Clone" level 70, akun ML "KD.Error" level 40, IG: @bung_clonee
+- Nurwafisah (S.Pd) — kreatif, penyayang, partner terbaik Arif, akun FF "Fii" level 50, akun ML "Fii" level 25, IG: @nr.wfsah
+- Mereka berdua: couple goals, udah wisuda bareng, hobi gaming (FF & ML), suka trip bareng.
+- Website ini dibuat oleh Arif (Bung Clone) tahun 2025.
+
+Tugasmu: ngobrol seru, kasih jokes gaming/couple, tips FF/ML, quote motivasi, atau cerita tentang Arif & Fisah.
+Jawab singkat dan asik! Jangan terlalu panjang (maks 3-4 kalimat).`;
+
+    function toggleChat() {
+        chatOpen = !chatOpen;
+        const win = document.getElementById('ai-chat-window');
+        const btn = document.getElementById('ai-chat-toggle');
+        const icon = document.getElementById('chat-icon');
+        win.classList.toggle('open', chatOpen);
+        btn.classList.toggle('open', chatOpen);
+        icon.textContent = chatOpen ? '✕' : '🤖';
+        // Remove badge
+        const badge = document.getElementById('ai-chat-badge');
+        if (badge) badge.remove();
+        // Send welcome message once
+        if (chatOpen && chatHistory.length === 0) {
+            setTimeout(() => {
+                addChatMsg('Heyy! 👾 Aku <strong>Clone AI</strong> — asisten digital Arif & Fisah! Tanya apa aja tentang mereka, minta jokes gaming, tips FF/ML, atau sekadar ngobrol santai ya~ 💚', 'ai');
+            }, 300);
+        }
+    }
+
+    function addChatMsg(html, role) {
+        const msgs = document.getElementById('chatMessages');
+        const d = document.createElement('div');
+        d.className = 'c-msg ' + role;
+        const avatarEmoji = role === 'ai' ? '🤖' : '👤';
+        d.innerHTML = `<div class="c-msg-avatar">${avatarEmoji}</div><div class="c-msg-bubble">${html}</div>`;
+        msgs.appendChild(d);
+        msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function showTypingIndicator() {
+        const msgs = document.getElementById('chatMessages');
+        const d = document.createElement('div');
+        d.className = 'c-msg ai'; d.id = 'typing-indicator';
+        d.innerHTML = `<div class="c-msg-avatar">🤖</div><div class="c-msg-bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
+        msgs.appendChild(d);
+        msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+        document.getElementById('typing-indicator')?.remove();
+    }
+
+    async function sendAIMsg() {
+        const input = document.getElementById('chatInput');
+        const text = input.value.trim();
+        if (!text || aiThinking) return;
+
+        input.value = '';
+        addChatMsg(text, 'user');
+        chatHistory.push({ role: 'user', content: text });
+
+        aiThinking = true;
+        document.getElementById('sendBtn').disabled = true;
+        showTypingIndicator();
+        document.getElementById('ai-loading-bar').style.display = 'block';
+
+        try {
+            const res = await fetch('https://api.anthropic.com/v1/messages', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    model: 'claude-sonnet-4-20250514',
+                    max_tokens: 300,
+                    system: SYSTEM_PROMPT,
+                    messages: chatHistory.slice(-10)
+                })
+            });
+
+            const data = await res.json();
+            const reply = data.content?.[0]?.text || 'Maaf, aku lagi bingung dikit. Coba tanya lagi yaa! 😅';
+            chatHistory.push({ role: 'assistant', content: reply });
+            removeTypingIndicator();
+            addChatMsg(reply.replace(/\n/g, '<br>'), 'ai');
+        } catch (err) {
+            removeTypingIndicator();
+            addChatMsg('Waduh, koneksi aku lagi gangguan nih 😅 Coba lagi ya!', 'ai');
         }
 
-        document.getElementById('messageForm').addEventListener('submit', function(e){
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            const message = document.getElementById('message').value;
-            const messagesDiv = document.getElementById('messages');
-            const newMessage = document.createElement('div');
-            newMessage.className = 'message';
-            newMessage.innerHTML = `<strong>${name}:</strong> ${message}`;
-            messagesDiv.appendChild(newMessage);
+        document.getElementById('ai-loading-bar').style.display = 'none';
+        aiThinking = false;
+        document.getElementById('sendBtn').disabled = false;
+        document.getElementById('chatInput').focus();
+    }
 
-            document.getElementById('name').value = '';
-            document.getElementById('message').value = '';
+    function quickSend(text) {
+        document.getElementById('chatInput').value = text;
+        sendAIMsg();
+        // Hide quick buttons after first use
+        document.getElementById('chatQuicks').style.display = 'none';
+    }
+
+    // ============ MUSIK & FORM ============
+    function toggleMusic() {
+        const audio = document.getElementById('backgroundMusic');
+        const toggleButton = document.getElementById('musicToggle');
+        const musicIcon = document.getElementById('musicIcon');
+
+        if (audio.paused) {
+            audio.play().then(() => {
+                toggleButton.classList.add('playing');
+                musicIcon.innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM19 12c0-2.88-1.63-5.36-4.01-6.63v13.26c2.38-1.27 4.01-3.75 4.01-6.63z"/>';
+            }).catch(err => console.error(err));
+        } else {
+            audio.pause();
+            toggleButton.classList.remove('playing');
+            musicIcon.innerHTML = '<path d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zm-15.5-6v12h4l5 5V1l-5 5H3z"/>';
+        }
+    }
+
+    document.getElementById('messageForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const message = document.getElementById('message').value;
+        const div = document.createElement('div');
+        div.className = 'message';
+        div.innerHTML = `<strong>${name}:</strong> ${message}`;
+        document.getElementById('messages').appendChild(div);
+        document.getElementById('name').value = '';
+        document.getElementById('message').value = '';
+    });
+
+    // ============ SCROLL REVEAL ============
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('active');
         });
+    }, { threshold: 0.12 });
 
-        // SCROLL ANIMATION OBSERVER
-        const observerOptions = {
-            threshold: 0.15 
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.reveal').forEach(el => {
-            observer.observe(el);
-        });
-        
-        document.querySelectorAll('.bio-card, .profile-card').forEach(el => {
-            el.classList.add('reveal'); 
-            observer.observe(el);
-        });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.querySelectorAll('.bio-card, .profile-card').forEach(el => {
+        el.classList.add('reveal');
+        observer.observe(el);
+    });
     </script>
-
 </body>
 </html>
