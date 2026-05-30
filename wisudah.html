@@ -3,18 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portofolio Arif & fisah</title>
+    <title>Portofolio Arif & Fisah</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="web.css">
     <style>
-        /* ============ GLOBAL ENHANCEMENTS ============ */
+        /* ============ BASE STYLES ============ */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         :root {
             --accent: #00ff88;
             --accent-dim: rgba(0,255,136,0.15);
             --accent-glow: 0 0 20px rgba(0,255,136,0.35);
+            --bg: #0e0e0e;
+            --surface: #1a1a1a;
+            --text: #e0e0e0;
+            --muted: #888;
         }
 
-        /* Floating particles background */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ============ PARTICLES ============ */
         #particles-bg {
             position: fixed;
             top: 0; left: 0;
@@ -38,197 +50,383 @@
             100% { opacity: 0; transform: translateY(-100vh) scale(0.5); }
         }
 
+        /* ============ HEADER ============ */
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+            z-index: 1;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        header p {
+            color: var(--muted);
+            font-size: 1rem;
+        }
+
+        /* ============ SECTIONS ============ */
+        section {
+            max-width: 900px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        section h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* ============ BIO CARDS ============ */
+        .bio {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .bio-card-wrapper {
+            position: relative;
+        }
+        .bio-card {
+            background: var(--surface);
+            border: 1px solid rgba(0,255,136,0.2);
+            border-radius: 16px;
+            padding: 30px 25px;
+            text-align: center;
+            width: 220px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .bio-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,255,136,0.2);
+        }
+        .bio-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent);
+            margin-bottom: 15px;
+        }
+        .bio-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .bio-card p {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 15px;
+        }
+
+        /* ============ SOCIAL LINKS (FIXED) ============ */
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border: 1px solid rgba(0,255,136,0.3);
+            border-radius: 20px;
+            transition: all 0.2s;
+        }
+        .social-link:hover {
+            background: rgba(0,255,136,0.1);
+            border-color: var(--accent);
+        }
+        .social-link svg {
+            flex-shrink: 0;
+        }
+
         /* ============ BIRTHDAY BANNER ============ */
         .birthday-banner {
             display: none;
             background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcf7f, #4d96ff);
             background-size: 400% 400%;
-            animation: gradientShift 3s ease infinite;
             padding: 20px;
             text-align: center;
             margin-bottom: 30px;
             border-radius: 15px;
             box-shadow: 0 8px 32px rgba(255, 107, 107, 0.3);
-            animation: slideDown 0.6s ease;
+            animation: slideDown 0.6s ease, gradientShift 3s ease infinite;
+            max-width: 900px;
+            margin: 0 auto 30px;
         }
-
-        .birthday-banner.show {
-            display: block;
-        }
-
+        .birthday-banner.show { display: block; }
         @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-
-        .birthday-banner h2 {
-            color: #fff;
-            font-size: 1.8rem;
-            margin: 10px 0;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .birthday-banner p {
-            color: #fff;
-            font-size: 1.1rem;
-            margin: 5px 0;
-            font-weight: 500;
-        }
-
-        /* Birthday badge on photo */
-        .bio-card-wrapper {
-            position: relative;
-        }
+        .birthday-banner h2 { color: #fff; font-size: 1.8rem; margin-bottom: 8px; }
+        .birthday-banner p { color: #fff; font-size: 1.1rem; font-weight: 500; }
 
         .birthday-badge {
             position: absolute;
-            top: -15px;
-            right: 20px;
+            top: -15px; right: 20px;
             background: linear-gradient(135deg, #ff6b6b, #ff6b9d);
             padding: 10px 20px;
             border-radius: 50px;
-            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+            box-shadow: 0 8px 25px rgba(255,107,107,0.4);
             z-index: 10;
-            animation: badgeBounce 1s cubic-bezier(0.34, 1.56, 0.64, 1);
             display: none;
         }
-
-        .birthday-badge.show {
-            display: block;
-        }
-
+        .birthday-badge.show { display: block; animation: badgeBounce 1s cubic-bezier(0.34,1.56,0.64,1); }
         @keyframes badgeBounce {
             0% { transform: scale(0) rotateZ(-45deg); }
             50% { transform: scale(1.1) rotateZ(0deg); }
             100% { transform: scale(1) rotateZ(0deg); }
         }
+        .birthday-badge-text { color: #fff; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; }
+        .badge-emoji { font-size: 1.4rem; animation: emojiPulse 1.5s ease-in-out infinite; }
+        @keyframes emojiPulse { 0%,100%{transform:scale(1) rotate(0deg)} 50%{transform:scale(1.2) rotate(20deg)} }
 
-        .birthday-badge-text {
-            color: #fff;
-            font-weight: 700;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .badge-emoji {
-            font-size: 1.4rem;
-            animation: emojiPulse 1.5s ease-in-out infinite;
-        }
-
-        @keyframes emojiPulse {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.2) rotate(20deg); }
-        }
-
-        /* Confetti for bio section */
         .bio-confetti {
             position: fixed;
             pointer-events: none;
             animation: confettiFall 3s linear forwards;
         }
-
         @keyframes confettiFall {
-            0% {
-                transform: translateY(0) rotateZ(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotateZ(360deg);
-                opacity: 0;
-            }
+            0% { transform: translateY(0) rotateZ(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotateZ(360deg); opacity: 0; }
         }
 
-        /* ============ GAME STYLES (ENHANCED) ============ */
-        .game-container {
-            display: none;
-            animation: fadeIn 0.3s ease;
+        /* ============ MUSIC TOGGLE ============ */
+        .music-toggle {
+            position: fixed;
+            top: 20px; right: 20px;
+            width: 48px; height: 48px;
+            background: var(--surface);
+            border: 1px solid rgba(0,255,136,0.3);
+            border-radius: 50%;
+            color: var(--accent);
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 9000;
+            transition: all 0.2s;
         }
-        .game-container.active { display: block; }
+        .music-toggle:hover { background: rgba(0,255,136,0.1); }
 
-        .game-tabs {
+        /* ============ ORBIT ============ */
+        .orbit-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 0 auto;
+        }
+        .orbit-center {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #0e0e0e;
+            font-weight: 700;
+            padding: 15px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        .orbit-item {
+            position: absolute;
+            animation: orbit 8s linear infinite;
+        }
+        .orbit-item:nth-child(2) { animation-delay: 0s; }
+        .orbit-item:nth-child(3) { animation-delay: -2s; }
+        .orbit-item:nth-child(4) { animation-delay: -4s; }
+        .orbit-item:nth-child(5) { animation-delay: -6s; }
+        .orbit-item div {
+            background: var(--surface);
+            border: 1px solid rgba(0,255,136,0.3);
+            color: var(--accent);
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+        @keyframes orbit {
+            0%   { transform: rotate(0deg) translateX(110px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(110px) rotate(-360deg); }
+        }
+
+        /* ============ SKILLS ============ */
+        .skills {
             display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
             flex-wrap: wrap;
+            gap: 12px;
             justify-content: center;
+        }
+        .skill {
+            background: rgba(0,255,136,0.1);
+            border: 1px solid rgba(0,255,136,0.3);
+            color: var(--accent);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .skill:hover { background: rgba(0,255,136,0.2); transform: translateY(-2px); }
+
+        /* ============ SLIDER ============ */
+        .slider { overflow: hidden; border-radius: 12px; }
+        .slides {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            padding: 10px 0;
+        }
+        .slides::-webkit-scrollbar { display: none; }
+        .slides img {
+            width: 250px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            scroll-snap-align: start;
+            flex-shrink: 0;
+            border: 1px solid rgba(0,255,136,0.2);
+        }
+
+        /* ============ PROFILE CARDS ============ */
+        .profile-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .profile-card {
+            background: var(--surface);
+            border: 1px solid rgba(0,255,136,0.2);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            width: 180px;
+        }
+        .profile-card img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+        .profile-card p {
+            color: var(--text);
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+        }
+        .profile-card p:first-of-type { font-weight: 600; color: var(--accent); }
+
+        /* ============ TESTIMONI ============ */
+        .testimoni { }
+        .testimoni form { display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; }
+        .testimoni input,
+        .testimoni textarea {
+            background: var(--surface);
+            border: 1px solid rgba(0,255,136,0.2);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: var(--text);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .testimoni input:focus,
+        .testimoni textarea:focus { border-color: var(--accent); }
+        .testimoni textarea { height: 100px; resize: vertical; }
+        .testimoni button[type="submit"] {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #0e0e0e;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+            align-self: flex-start;
+        }
+        .testimoni button[type="submit"]:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,255,136,0.3); }
+
+        .messages { display: flex; flex-direction: column; gap: 12px; }
+        .message-item {
+            background: var(--surface);
+            border: 1px solid rgba(0,255,136,0.15);
+            border-radius: 10px;
+            padding: 14px 18px;
+        }
+        .message-item strong { color: var(--accent); font-size: 0.85rem; }
+        .message-item p { color: var(--text); font-size: 0.85rem; margin-top: 4px; }
+
+        /* ============ GAME SECTION ============ */
+        .game { text-align: center; }
+        .game-container { display: none; animation: fadeIn 0.3s ease; }
+        .game-container.active { display: block; }
+        .game-tabs {
+            display: flex; gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap; justify-content: center;
         }
         .game-tab {
             padding: 12px 25px;
-            background: rgba(0, 255, 136, 0.1);
-            border: 2px solid rgba(0, 255, 136, 0.3);
+            background: rgba(0,255,136,0.1);
+            border: 2px solid rgba(0,255,136,0.3);
             color: #fff;
             border-radius: 25px;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: all 0.3s;
             font-size: 0.95rem;
+            font-family: 'Poppins', sans-serif;
         }
-        .game-tab:hover {
-            border-color: #00ff88;
-            background: rgba(0, 255, 136, 0.2);
-            transform: translateY(-2px);
-        }
-        .game-tab.active {
-            background: linear-gradient(135deg, #00ff88, #00cc6a);
-            color: #0e0e0e;
-            border-color: #00ff88;
-            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
-        }
+        .game-tab:hover { border-color: var(--accent); background: rgba(0,255,136,0.2); transform: translateY(-2px); }
+        .game-tab.active { background: linear-gradient(135deg,#00ff88,#00cc6a); color: #0e0e0e; border-color: var(--accent); box-shadow: 0 8px 25px rgba(0,255,136,0.4); }
 
-        .game-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
-        .game-info {
-            text-align: center;
-            font-size: 0.95rem;
-            color: #aaa;
-            margin-bottom: 10px;
-            font-style: italic;
-        }
+        .game-content { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+        .game-info { font-size: 0.95rem; color: var(--muted); margin-bottom: 10px; font-style: italic; }
+        .tap-hint { font-size: 0.82rem; color: var(--muted); margin-top: 6px; }
 
-        /* FLAPPY BIRD */
-        #flappyCanvas {
-            border: 2px solid #00ff88;
+        #flappyCanvas, #snakeCanvas {
+            border: 2px solid var(--accent);
             border-radius: 10px;
             display: block;
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+            box-shadow: 0 10px 30px rgba(0,255,136,0.3);
         }
 
         .game-stats {
-            display: flex;
-            gap: 30px;
-            justify-content: center;
-            flex-wrap: wrap;
+            display: flex; gap: 30px;
+            justify-content: center; flex-wrap: wrap;
             margin-top: 20px;
         }
         .stat {
             text-align: center;
-            background: rgba(0, 255, 136, 0.1);
+            background: rgba(0,255,136,0.1);
             padding: 15px 25px;
             border-radius: 10px;
-            border: 1px solid rgba(0, 255, 136, 0.3);
+            border: 1px solid rgba(0,255,136,0.3);
         }
-        .stat-label { font-size: 0.85rem; color: #aaa; margin-bottom: 5px; }
-        .stat-value { font-size: 1.8rem; font-weight: 700; color: #00ff88; }
+        .stat-label { font-size: 0.85rem; color: var(--muted); margin-bottom: 5px; }
+        .stat-value { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
 
-        /* MEMORY GAME */
         .memory-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -239,65 +437,37 @@
         .memory-card {
             width: 80px; height: 80px;
             background: linear-gradient(135deg, #00ff88, #00cc6a);
-            border: 2px solid rgba(0, 255, 136, 0.5);
+            border: 2px solid rgba(0,255,136,0.5);
             border-radius: 10px;
             cursor: pointer;
             font-size: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.2);
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,255,136,0.2);
             user-select: none;
-            perspective: 600px;
         }
-        .memory-card:hover { transform: scale(1.07) rotateY(10deg); box-shadow: 0 8px 25px rgba(0,255,136,0.4); }
-        .memory-card.flipped { background: #1c1c1c; border-color: #00ff88; }
+        .memory-card:hover { transform: scale(1.07); box-shadow: 0 8px 25px rgba(0,255,136,0.4); }
+        .memory-card.flipped { background: #1c1c1c; border-color: var(--accent); }
         .memory-card.matched { opacity: 0.45; pointer-events: none; filter: grayscale(0.3); }
 
-        /* SNAKE GAME */
-        #snakeCanvas {
-            border: 2px solid #00ff88;
-            border-radius: 10px;
-            background: #0a0a0a;
-            display: block;
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
-        }
+        #snakeCanvas { background: #0a0a0a; }
 
-        /* MOBILE TOUCH D-PAD */
-        .dpad {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            margin-top: 15px;
-        }
+        .dpad { display: none; flex-direction: column; align-items: center; gap: 5px; margin-top: 15px; }
         .dpad-row { display: flex; gap: 5px; }
         .dpad-btn {
             width: 54px; height: 54px;
             background: rgba(0,255,136,0.12);
             border: 2px solid rgba(0,255,136,0.35);
             border-radius: 12px;
-            color: #00ff88;
+            color: var(--accent);
             font-size: 1.4rem;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
-            active-transform: scale(0.92);
             transition: background 0.1s;
         }
         .dpad-btn:active { background: rgba(0,255,136,0.3); transform: scale(0.92); }
-
-        /* FLAPPY TOUCH HINT */
-        .tap-hint {
-            font-size: 0.82rem;
-            color: #aaa;
-            margin-top: 6px;
-        }
-
-        .game-controls { margin-top: 15px; text-align: center; color: #aaa; font-size: 0.9rem; }
-        .game-controls strong { color: #00ff88; }
 
         .reset-button {
             padding: 12px 30px;
@@ -308,32 +478,26 @@
             font-weight: 700;
             cursor: pointer;
             font-size: 1rem;
-            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-            box-shadow: 0 6px 20px rgba(0, 255, 136, 0.3);
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(0,255,136,0.3);
             margin-top: 12px;
+            font-family: 'Poppins', sans-serif;
         }
-        .reset-button:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0, 255, 136, 0.5); }
-        .reset-button:active { transform: translateY(-1px); }
+        .reset-button:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,255,136,0.5); }
 
         .game-message {
             font-size: 1.2rem;
             font-weight: 700;
-            color: #00ff88;
-            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(0,255,136,0.5);
             margin-top: 15px;
             min-height: 30px;
-            animation: pulse-text 1s ease-in-out infinite;
-        }
-        @keyframes pulse-text {
-            0%,100% { text-shadow: 0 0 10px rgba(0,255,136,0.5); }
-            50% { text-shadow: 0 0 20px rgba(0,255,136,0.9); }
         }
 
         /* ============ AI CHAT WIDGET ============ */
         #ai-chat-toggle {
             position: fixed;
-            bottom: 28px;
-            right: 28px;
+            bottom: 28px; right: 28px;
             width: 60px; height: 60px;
             background: linear-gradient(135deg, #00ff88, #00cc6a);
             border: none;
@@ -341,7 +505,7 @@
             cursor: pointer;
             font-size: 1.6rem;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 6px 25px rgba(0,255,136,0.5), 0 0 0 0 rgba(0,255,136,0.4);
+            box-shadow: 0 6px 25px rgba(0,255,136,0.5);
             z-index: 9999;
             transition: transform 0.3s, box-shadow 0.3s;
             animation: ai-ping 2.5s ease-in-out infinite;
@@ -364,127 +528,75 @@
             color: #fff;
             display: flex; align-items: center; justify-content: center;
             border: 2px solid #0e0e0e;
-            animation: badge-bounce 0.5s ease;
         }
-        @keyframes badge-bounce { 0%{transform:scale(0)} 60%{transform:scale(1.3)} 100%{transform:scale(1)} }
 
         #ai-chat-window {
             position: fixed;
-            bottom: 105px;
-            right: 28px;
-            width: 340px;
-            height: 500px;
+            bottom: 105px; right: 28px;
+            width: 340px; height: 500px;
             background: rgba(12,12,12,0.97);
             border: 1.5px solid rgba(0,255,136,0.3);
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 40px rgba(0,255,136,0.1);
-            display: flex;
-            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+            display: flex; flex-direction: column;
             z-index: 9998;
             overflow: hidden;
             transform: scale(0) translateY(30px);
             transform-origin: bottom right;
-            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+            transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
             opacity: 0;
             pointer-events: none;
         }
-        #ai-chat-window.open {
-            transform: scale(1) translateY(0);
-            opacity: 1;
-            pointer-events: all;
-        }
+        #ai-chat-window.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
 
         .chat-header {
-            background: linear-gradient(135deg, rgba(0,255,136,0.12), rgba(0,204,106,0.06));
+            background: rgba(0,255,136,0.08);
             padding: 14px 18px;
-            display: flex;
-            align-items: center;
-            gap: 11px;
+            display: flex; align-items: center; gap: 11px;
             border-bottom: 1px solid rgba(0,255,136,0.18);
         }
         .chat-avatar-wrap {
             width: 40px; height: 40px;
-            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            background: linear-gradient(135deg,#00ff88,#00cc6a);
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             font-size: 1.2rem;
-            box-shadow: 0 0 15px rgba(0,255,136,0.4);
-            animation: avatar-glow 2s ease-in-out infinite;
-        }
-        @keyframes avatar-glow {
-            0%,100% { box-shadow: 0 0 15px rgba(0,255,136,0.4); }
-            50% { box-shadow: 0 0 25px rgba(0,255,136,0.7); }
         }
         .chat-header-info h3 { font-size: 0.9rem; color: #fff; font-weight: 600; margin: 0; }
-        .chat-header-info p { font-size: 0.7rem; color: #00ff88; display: flex; align-items: center; gap: 4px; margin: 0; }
-        .online-dot { width: 6px; height: 6px; background: #00ff88; border-radius: 50%; animation: blink-dot 1.5s infinite; }
+        .chat-header-info p { font-size: 0.7rem; color: var(--accent); display: flex; align-items: center; gap: 4px; margin: 0; }
+        .online-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: blink-dot 1.5s infinite; }
         @keyframes blink-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
-        .chat-close {
-            margin-left: auto;
-            background: none; border: none;
-            color: #666; font-size: 1.3rem;
-            cursor: pointer; line-height: 1;
-            transition: color 0.2s;
-        }
-        .chat-close:hover { color: #00ff88; }
+        .chat-close { margin-left: auto; background: none; border: none; color: #666; font-size: 1.3rem; cursor: pointer; transition: color 0.2s; }
+        .chat-close:hover { color: var(--accent); }
 
         .chat-messages {
-            flex: 1;
-            overflow-y: auto;
+            flex: 1; overflow-y: auto;
             padding: 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            display: flex; flex-direction: column; gap: 10px;
             scrollbar-width: thin;
             scrollbar-color: rgba(0,255,136,0.25) transparent;
         }
-        .chat-messages::-webkit-scrollbar { width: 4px; }
-        .chat-messages::-webkit-scrollbar-thumb { background: rgba(0,255,136,0.25); border-radius: 4px; }
-
         .c-msg { display: flex; gap: 7px; align-items: flex-end; animation: msg-in 0.3s ease; }
-        @keyframes msg-in { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes msg-in { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
         .c-msg.user { flex-direction: row-reverse; }
-
         .c-msg-avatar {
             width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
             display: flex; align-items: center; justify-content: center;
             font-size: 0.75rem;
-            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            background: linear-gradient(135deg,#00ff88,#00cc6a);
         }
-        .c-msg.user .c-msg-avatar { background: linear-gradient(135deg, #444, #2a2a2a); }
+        .c-msg.user .c-msg-avatar { background: linear-gradient(135deg,#444,#2a2a2a); }
+        .c-msg-bubble { max-width: 80%; padding: 9px 13px; border-radius: 16px; font-size: 0.8rem; line-height: 1.5; }
+        .c-msg.ai .c-msg-bubble { background: rgba(0,255,136,0.07); border: 1px solid rgba(0,255,136,0.18); color: #ddd; border-bottom-left-radius: 4px; }
+        .c-msg.user .c-msg-bubble { background: rgba(0,255,136,0.18); border: 1px solid rgba(0,255,136,0.28); color: #fff; border-bottom-right-radius: 4px; }
 
-        .c-msg-bubble {
-            max-width: 80%;
-            padding: 9px 13px;
-            border-radius: 16px;
-            font-size: 0.8rem;
-            line-height: 1.5;
-        }
-        .c-msg.ai .c-msg-bubble {
-            background: rgba(0,255,136,0.07);
-            border: 1px solid rgba(0,255,136,0.18);
-            color: #ddd;
-            border-bottom-left-radius: 4px;
-        }
-        .c-msg.user .c-msg-bubble {
-            background: linear-gradient(135deg, rgba(0,255,136,0.18), rgba(0,204,106,0.12));
-            border: 1px solid rgba(0,255,136,0.28);
-            color: #fff;
-            border-bottom-right-radius: 4px;
-        }
-
-        .chat-quick-btns {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-            padding: 6px 14px;
-        }
+        .chat-quick-btns { display: flex; gap: 5px; flex-wrap: wrap; padding: 6px 14px; }
         .c-quick {
             padding: 5px 10px;
             background: rgba(0,255,136,0.07);
             border: 1px solid rgba(0,255,136,0.22);
             border-radius: 20px;
-            color: #00ff88;
+            color: var(--accent);
             font-size: 0.7rem;
             cursor: pointer;
             transition: all 0.2s;
@@ -492,13 +604,7 @@
         }
         .c-quick:hover { background: rgba(0,255,136,0.18); transform: scale(1.04); }
 
-        .chat-input-row {
-            padding: 10px 14px;
-            border-top: 1px solid rgba(0,255,136,0.12);
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
+        .chat-input-row { padding: 10px 14px; border-top: 1px solid rgba(0,255,136,0.12); display: flex; gap: 8px; align-items: center; }
         .c-input {
             flex: 1;
             background: rgba(255,255,255,0.04);
@@ -515,82 +621,98 @@
         .c-input::placeholder { color: #444; }
         .c-send {
             width: 37px; height: 37px;
-            background: linear-gradient(135deg, #00ff88, #00cc6a);
-            border: none;
-            border-radius: 50%;
+            background: linear-gradient(135deg,#00ff88,#00cc6a);
+            border: none; border-radius: 50%;
             color: #0e0e0e;
             cursor: pointer;
             display: flex; align-items: center; justify-content: center;
-            transition: all 0.2s;
-            flex-shrink: 0;
+            transition: all 0.2s; flex-shrink: 0;
         }
-        .c-send:hover { transform: scale(1.12); box-shadow: 0 0 14px rgba(0,255,136,0.5); }
+        .c-send:hover { transform: scale(1.12); }
         .c-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
         .typing-dots { display: flex; gap: 4px; padding: 9px 13px; }
-        .typing-dots span {
-            width: 6px; height: 6px;
-            background: #00ff88;
-            border-radius: 50%;
-            animation: t-dot 1s infinite;
-        }
+        .typing-dots span { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: t-dot 1s infinite; }
         .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
         .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
         @keyframes t-dot { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
 
-        .ai-loading-bar {
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #00ff88, transparent);
-            background-size: 200% 100%;
-            animation: loading-slide 1s linear infinite;
-        }
+        .ai-loading-bar { height: 2px; background: linear-gradient(90deg,transparent,#00ff88,transparent); background-size: 200% 100%; animation: loading-slide 1s linear infinite; }
         @keyframes loading-slide { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+        /* ============ FOOTER ============ */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 1px solid rgba(0,255,136,0.1);
+            color: var(--muted);
+            font-size: 0.85rem;
+            position: relative;
+            z-index: 1;
+        }
+        .social-footer { display: flex; gap: 15px; justify-content: center; margin-top: 12px; }
+        .footer-instagram-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border: 1px solid rgba(0,255,136,0.3);
+            border-radius: 20px;
+            transition: all 0.2s;
+        }
+        .footer-instagram-link:hover { background: rgba(0,255,136,0.1); border-color: var(--accent); }
+
+        /* ============ REVEAL ANIMATION ============ */
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+
+        .score-pop { animation: score-pop 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+        @keyframes score-pop { 0%{transform:scale(1)} 50%{transform:scale(1.5)} 100%{transform:scale(1)} }
+
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
 
         /* ============ RESPONSIVE ============ */
         @media(max-width: 768px) {
-            .memory-grid { grid-template-columns: repeat(4,1fr); gap: 8px; max-width: 100%; }
+            header h1 { font-size: 1.8rem; }
+            .bio { gap: 20px; }
+            .bio-card { width: 165px; padding: 20px 15px; }
+            .memory-grid { gap: 8px; max-width: 100%; }
             .memory-card { width: 100%; height: 68px; font-size: 1.4rem; }
-            #flappyCanvas, #snakeCanvas { max-width: 100%; }
-            .game-tabs { gap: 7px; }
-            .game-tab { padding: 9px 18px; font-size: 0.82rem; }
             .dpad { display: flex !important; }
             #ai-chat-window { width: calc(100vw - 32px); right: 16px; bottom: 90px; }
             #ai-chat-toggle { right: 16px; bottom: 16px; }
             .birthday-banner h2 { font-size: 1.4rem; }
         }
-
-        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-
-        /* Bounce-in for new section items */
-        .score-pop { animation: score-pop 0.4s cubic-bezier(0.34,1.56,0.64,1); }
-        @keyframes score-pop { 0%{transform:scale(1)} 50%{transform:scale(1.5)} 100%{transform:scale(1)} }
     </style>
 </head>
 <body>
-    <!-- Floating particles -->
     <div id="particles-bg"></div>
 
-    <!-- Birthday Banner -->
-    <div class="birthday-banner" id="birthdayBanner">
+    <div class="birthday-banner" id="birthdayBanner" style="padding: 20px; position: relative; z-index: 1;">
         <h2>🎉 Selamat Ulang Tahun! 🎉</h2>
         <p id="birthdayBannerName"></p>
     </div>
 
-    <audio id="backgroundMusic" loop>
-        Browser Anda tidak mendukung elemen audio.
-    </audio>
+    <audio id="backgroundMusic" loop></audio>
 
-    <button class="music-toggle" id="musicToggle" onclick="toggleMusic()">
-        <svg id="musicIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <button class="music-toggle" id="musicToggle" onclick="toggleMusic()" aria-label="Toggle musik">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
             <path d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zm-15.5-6v12h4l5 5V1l-5 5H3z"/>
         </svg>
     </button>
-    
+
     <header>
         <h1>Portofolio Bersama Kami</h1>
         <p>Momen terbaik, hobi seru, dan perjalanan penuh warna.</p>
     </header>
 
+    <!-- BIO SECTION -->
     <section class="bio reveal">
         <div class="bio-card-wrapper">
             <div class="birthday-badge" id="badge-arif">
@@ -603,9 +725,13 @@
                 <img src="image/arif.jpg" alt="Foto Muh. Arifatwa">
                 <h3>Muh. Arifatwa, S.Kom</h3>
                 <p>Mahasiswa, gamer, pecinta teknologi.</p>
-                 <a href="https://www.instagram.com/bung_clonee?igsh=NDlyMXpmeXd5cnVt" target="_blank" class="social-link instagram-link">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="roun[...]
-                     Bung CLone
+                <a href="https://www.instagram.com/bung_clonee?igsh=NDlyMXpmeXd5cnVt" target="_blank" class="social-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                    Bung Clone
                 </a>
             </div>
         </div>
@@ -618,17 +744,22 @@
                 </div>
             </div>
             <div class="bio-card reveal reveal-delay-2">
-                <img src="image/fisah.jpg" alt="Foto Pasangan">
+                <img src="image/fisah.jpg" alt="Foto Nurwafisah">
                 <h3>Nurwafisah, S.Pd</h3>
                 <p>Kreatif, penyayang, dan partner terbaik.</p>
-                <a href="https://www.instagram.com/nr.wfsah?igsh=dmsybTJxZTM4YTBv" target="_blank" class="social-link instagram-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round[...]
+                <a href="https://www.instagram.com/nr.wfsah?igsh=dmsybTJxZTM4YTBv" target="_blank" class="social-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
                     nr.wfsah
                 </a>
             </div>
         </div>
     </section>
 
+    <!-- ORBIT -->
     <section class="reveal">
         <h2>Orbit Bersama</h2>
         <div class="orbit-container">
@@ -640,6 +771,7 @@
         </div>
     </section>
 
+    <!-- SKILLS -->
     <section class="skills reveal">
         <h2 style="width:100%">Skills Bersama</h2>
         <div class="skill">Teamwork 💪</div>
@@ -649,6 +781,7 @@
         <div class="skill">Wisuda 🎓</div>
     </section>
 
+    <!-- GALLERY -->
     <section class="reveal">
         <h2>Galeri Kenangan</h2>
         <div class="slider">
@@ -667,10 +800,9 @@
         </div>
     </section>
 
-    <!-- ============ GAME SECTION ============ -->
-    <section class="game reveal" style="text-align:center;">
+    <!-- GAME SECTION -->
+    <section class="game reveal">
         <h2>🎮 Game Arena — Mainkan & Raih Skor Tertinggi!</h2>
-        
         <div class="game-tabs">
             <button class="game-tab active" onclick="switchGame('flappy', event)">🐦 Flappy Bird</button>
             <button class="game-tab" onclick="switchGame('memory', event)">🧠 Memory Game</button>
@@ -683,14 +815,8 @@
             <canvas id="flappyCanvas" width="300" height="400"></canvas>
             <p class="tap-hint">📱 Mobile: tap canvas untuk loncat!</p>
             <div class="game-stats">
-                <div class="stat">
-                    <div class="stat-label">Skor Sekarang</div>
-                    <div class="stat-value" id="flappyScore">0</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-label">🏆 Skor Terbaik</div>
-                    <div class="stat-value" id="flappyBest">0</div>
-                </div>
+                <div class="stat"><div class="stat-label">Skor Sekarang</div><div class="stat-value" id="flappyScore">0</div></div>
+                <div class="stat"><div class="stat-label">🏆 Skor Terbaik</div><div class="stat-value" id="flappyBest">0</div></div>
             </div>
             <div class="game-message" id="flappyMessage"></div>
             <button class="reset-button" onclick="resetFlappyBird()">🔄 Mainkan Lagi</button>
@@ -700,14 +826,8 @@
         <div id="memory-container" class="game-container">
             <p class="game-info">Temukan semua pasangan emoji yang tersembunyi! 🎯</p>
             <div class="game-stats">
-                <div class="stat">
-                    <div class="stat-label">👆 Gerakan</div>
-                    <div class="stat-value" id="memoryMoves">0</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-label">✅ Pasangan</div>
-                    <div class="stat-value" id="memoryMatched">0/8</div>
-                </div>
+                <div class="stat"><div class="stat-label">👆 Gerakan</div><div class="stat-value" id="memoryMoves">0</div></div>
+                <div class="stat"><div class="stat-label">✅ Pasangan</div><div class="stat-value" id="memoryMatched">0/8</div></div>
             </div>
             <div class="memory-grid" id="memoryGrid"></div>
             <div class="game-message" id="memoryMessage"></div>
@@ -718,32 +838,24 @@
         <div id="snake-container" class="game-container">
             <p class="game-info">Gunakan <strong style="color:#00ff88">ARROW / WASD</strong> untuk bergerak! 🎯</p>
             <canvas id="snakeCanvas" width="300" height="300"></canvas>
-            <!-- Mobile D-Pad -->
-            <div class="dpad" id="snakeDpad">
+            <div class="dpad" id="snakeDpad" style="display:none">
+                <div class="dpad-row"><div class="dpad-btn" ontouchstart="dpadPress('up')" onmousedown="dpadPress('up')">↑</div></div>
                 <div class="dpad-row">
-                    <div class="dpad-btn" id="dpad-up" ontouchstart="dpadPress('up')" onmousedown="dpadPress('up')">↑</div>
-                </div>
-                <div class="dpad-row">
-                    <div class="dpad-btn" id="dpad-left" ontouchstart="dpadPress('left')" onmousedown="dpadPress('left')">←</div>
-                    <div class="dpad-btn" id="dpad-down" ontouchstart="dpadPress('down')" onmousedown="dpadPress('down')">↓</div>
-                    <div class="dpad-btn" id="dpad-right" ontouchstart="dpadPress('right')" onmousedown="dpadPress('right')">→</div>
+                    <div class="dpad-btn" ontouchstart="dpadPress('left')" onmousedown="dpadPress('left')">←</div>
+                    <div class="dpad-btn" ontouchstart="dpadPress('down')" onmousedown="dpadPress('down')">↓</div>
+                    <div class="dpad-btn" ontouchstart="dpadPress('right')" onmousedown="dpadPress('right')">→</div>
                 </div>
             </div>
             <div class="game-stats">
-                <div class="stat">
-                    <div class="stat-label">Skor Sekarang</div>
-                    <div class="stat-value" id="snakeScore">0</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-label">🏆 Skor Terbaik</div>
-                    <div class="stat-value" id="snakeBest">0</div>
-                </div>
+                <div class="stat"><div class="stat-label">Skor Sekarang</div><div class="stat-value" id="snakeScore">0</div></div>
+                <div class="stat"><div class="stat-label">🏆 Skor Terbaik</div><div class="stat-value" id="snakeBest">0</div></div>
             </div>
             <div class="game-message" id="snakeMessage"></div>
             <button class="reset-button" onclick="resetSnakeGame()">🔄 Mainkan Lagi</button>
         </div>
     </section>
 
+    <!-- PROFIL FF -->
     <section class="reveal">
         <h2>Profil Game FF</h2>
         <div class="profile-container">
@@ -759,7 +871,8 @@
             </div>
         </div>
     </section>
-    
+
+    <!-- PROFIL ML -->
     <section class="reveal">
         <h2>Profil Game ML</h2>
         <div class="profile-container">
@@ -776,31 +889,40 @@
         </div>
     </section>
 
+    <!-- TESTIMONI -->
     <section class="testimoni reveal">
         <h2>Pesan & Testimoni</h2>
         <form id="messageForm">
-            <input type="text" id="name" placeholder="Nama" required>
-            <textarea id="message" placeholder="Tulis pesan..." required></textarea>
+            <input type="text" id="nameInput" placeholder="Nama" required>
+            <textarea id="messageInput" placeholder="Tulis pesan..." required></textarea>
             <button type="submit">Kirim Pesan</button>
         </form>
         <div class="messages" id="messages"></div>
     </section>
 
     <footer>
-        <p>&copy; Di buat oleh BUng Clone Tahun 2025 @Bung-Clone</p>
+        <p>&copy; Dibuat oleh Bung Clone Tahun 2025 @Bung-Clone</p>
         <div class="social-footer">
             <a href="https://www.instagram.com/bung_clonee?igsh=NDlyMXpmeXd5cnVt" target="_blank" class="footer-instagram-link">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="roun[...]
-                Bung CLone
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+                Bung Clone
             </a>
             <a href="https://www.instagram.com/nr.wfsah?igsh=dmsybTJxZTM4YTBv" target="_blank" class="footer-instagram-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round[...]
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
                 nr.wfsah
             </a>
         </div>
     </footer>
 
-    <!-- ============ AI CHAT WIDGET ============ -->
+    <!-- AI CHAT WIDGET -->
     <button id="ai-chat-toggle" onclick="toggleChat()" title="Chat dengan Clone AI">
         <span id="chat-icon">🤖</span>
         <span id="ai-chat-badge">1</span>
@@ -824,8 +946,8 @@
             <button class="c-quick" onclick="quickSend('Beri aku quote motivasi!')">✨ Motivasi</button>
         </div>
         <div class="chat-input-row">
-            <input class="c-input" id="chatInput" placeholder="Ketik pesan..." 
-                onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();sendAIMsg();}">
+            <input class="c-input" id="chatInput" placeholder="Ketik pesan..."
+                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAIMsg();}">
             <button class="c-send" id="sendBtn" onclick="sendAIMsg()">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
             </button>
@@ -833,90 +955,95 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
     <script>
     // ============ BIRTHDAY DETECTION ============
     const birthdayData = [
-        {
-            date: "05-29",
-            name: "Nurwafisah",
-            badgeId: "badge-fisah"
-        },
-        {
-            date: "10-25",
-            name: "Muh Arifatwa",
-            badgeId: "badge-arif"
-        }
+        { date: "05-29", name: "Nurwafisah", badgeId: "badge-fisah" },
+        { date: "10-25", name: "Muh Arifatwa", badgeId: "badge-arif" }
     ];
 
     function getTodayDate() {
         const now = new Date();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const day = String(now.getDate()).padStart(2, '0');
-        return `${month}-${day}`;
+        return String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
     }
 
-    function checkBirthdayInPage() {
+    function checkBirthday() {
         const today = getTodayDate();
-        const birthday = birthdayData.find(b => b.date === today);
-        
-        if (birthday) {
-            // Tampilkan banner
-            const banner = document.getElementById('birthdayBanner');
-            document.getElementById('birthdayBannerName').textContent = `Selamat Ulang Tahun untuk ${birthday.name}! 🎂`;
-            banner.classList.add('show');
-
-            // Tampilkan badge
-            const badge = document.getElementById(birthday.badgeId);
-            if (badge) {
-                badge.classList.add('show');
-            }
-
-            // Buat confetti di halaman bio
-            createPageConfetti();
-        }
+        const bd = birthdayData.find(b => b.date === today);
+        if (!bd) return;
+        const banner = document.getElementById('birthdayBanner');
+        document.getElementById('birthdayBannerName').textContent = 'Selamat Ulang Tahun untuk ' + bd.name + '! 🎂';
+        banner.classList.add('show');
+        const badge = document.getElementById(bd.badgeId);
+        if (badge) badge.classList.add('show');
+        createPageConfetti();
     }
 
     function createPageConfetti() {
-        const colors = ['🎉', '🎊', '🎈', '🎁', '✨', '💚', '🎂'];
-        const confettiCount = 30;
-
-        for (let i = 0; i < confettiCount; i++) {
-            const confetti = document.createElement('div');
-            confetti.className = 'bio-confetti';
-            confetti.textContent = colors[Math.floor(Math.random() * colors.length)];
-            confetti.style.left = Math.random() * 100 + '%';
-            confetti.style.top = '-10px';
-            confetti.style.fontSize = Math.random() * 20 + 15 + 'px';
-            confetti.style.animationDuration = Math.random() * 2 + 2 + 's';
-            confetti.style.animationDelay = Math.random() * 0.3 + 's';
-            confetti.style.opacity = Math.random() * 0.7 + 0.3;
-            
-            document.body.appendChild(confetti);
-
-            setTimeout(() => confetti.remove(), 5000);
+        const items = ['🎉','🎊','🎈','🎁','✨','💚','🎂'];
+        for (let i = 0; i < 30; i++) {
+            const el = document.createElement('div');
+            el.className = 'bio-confetti';
+            el.textContent = items[Math.floor(Math.random() * items.length)];
+            el.style.left = Math.random() * 100 + '%';
+            el.style.top = '-10px';
+            el.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            el.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            el.style.animationDelay = (Math.random() * 0.3) + 's';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 5000);
         }
     }
 
     // ============ PARTICLES ============
-    (function spawnParticles() {
+    (function() {
         const bg = document.getElementById('particles-bg');
         for (let i = 0; i < 22; i++) {
             const p = document.createElement('div');
             p.className = 'particle';
             p.style.left = Math.random() * 100 + '%';
             p.style.bottom = '-10px';
-            p.style.width = p.style.height = (Math.random() * 3 + 1) + 'px';
+            const s = (Math.random() * 3 + 1) + 'px';
+            p.style.width = p.style.height = s;
             const dur = Math.random() * 12 + 8;
             p.style.animationDuration = dur + 's';
-            p.style.animationDelay = Math.random() * dur + 's';
+            p.style.animationDelay = (Math.random() * dur) + 's';
             bg.appendChild(p);
         }
     })();
 
-    // Check birthday saat halaman dimuat
-    window.addEventListener('load', () => {
-        checkBirthdayInPage();
+    // ============ REVEAL ON SCROLL ============
+    function revealOnScroll() {
+        document.querySelectorAll('.reveal').forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight - 80) {
+                el.classList.add('visible');
+            }
+        });
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+
+    // ============ MUSIC TOGGLE ============
+    let musicPlaying = false;
+    function toggleMusic() {
+        const audio = document.getElementById('backgroundMusic');
+        if (musicPlaying) { audio.pause(); musicPlaying = false; }
+        else { audio.play().catch(() => {}); musicPlaying = true; }
+    }
+
+    // ============ TESTIMONI FORM ============
+    document.getElementById('messageForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('nameInput').value.trim();
+        const msg  = document.getElementById('messageInput').value.trim();
+        if (!name || !msg) return;
+        const container = document.getElementById('messages');
+        const item = document.createElement('div');
+        item.className = 'message-item';
+        item.innerHTML = '<strong>' + name + '</strong><p>' + msg + '</p>';
+        container.prepend(item);
+        document.getElementById('nameInput').value = '';
+        document.getElementById('messageInput').value = '';
     });
 
     // ============ GAME SWITCHER ============
@@ -928,24 +1055,17 @@
         document.getElementById('snakeDpad').style.display = (game === 'snake') ? 'flex' : 'none';
     }
 
-    // [Rest of the JavaScript code remains the same - keeping all game logic]
     // ============ FLAPPY BIRD ============
     const flappyCanvas = document.getElementById('flappyCanvas');
     const flappyCtx = flappyCanvas.getContext('2d');
-
     let flappyBird = { x: 60, y: 180, velocity: 0, gravity: 0.55, jumpPower: -11 };
-    let flappyPipes = [];
-    let flappyScore = 0;
+    let flappyPipes = [], flappyScore = 0;
     let flappyBestScore = parseInt(localStorage.getItem('flappyBest') || '0');
-    let flappyGameRunning = false;
-    let flappyStarted = false;
-    let flappyRAF;
-
+    let flappyGameRunning = false, flappyRAF;
     document.getElementById('flappyBest').textContent = flappyBestScore;
 
     function createFlappyPipe() {
-        const gap = 110;
-        const minY = 60;
+        const gap = 110, minY = 60;
         const maxY = flappyCanvas.height - gap - 60;
         const pipeY = Math.random() * (maxY - minY) + minY;
         flappyPipes.push({ x: flappyCanvas.width, topHeight: pipeY, bottomY: pipeY + gap, width: 48, scored: false });
@@ -962,15 +1082,10 @@
 
     function drawFlappyScene() {
         const sky = flappyCtx.createLinearGradient(0, 0, 0, flappyCanvas.height);
-        sky.addColorStop(0, '#87CEEB');
-        sky.addColorStop(1, '#E0F6FF');
+        sky.addColorStop(0, '#87CEEB'); sky.addColorStop(1, '#E0F6FF');
         flappyCtx.fillStyle = sky;
         flappyCtx.fillRect(0, 0, flappyCanvas.width, flappyCanvas.height);
-
-        drawCloud(40, 50, 16);
-        drawCloud(180, 35, 20);
-        drawCloud(250, 70, 14);
-
+        drawCloud(40, 50, 16); drawCloud(180, 35, 20); drawCloud(250, 70, 14);
         flappyCtx.fillStyle = '#8BC34A';
         flappyCtx.fillRect(0, flappyCanvas.height - 20, flappyCanvas.width, 20);
         flappyCtx.fillStyle = '#7CB342';
@@ -982,38 +1097,24 @@
         flappyCtx.translate(flappyBird.x, flappyBird.y);
         const angle = Math.min(Math.max(flappyBird.velocity * 3, -30), 60);
         flappyCtx.rotate(angle * Math.PI / 180);
-
         flappyCtx.fillStyle = '#FFD700';
-        flappyCtx.beginPath();
-        flappyCtx.ellipse(0, 0, 16, 13, 0, 0, Math.PI * 2);
-        flappyCtx.fill();
+        flappyCtx.beginPath(); flappyCtx.ellipse(0, 0, 16, 13, 0, 0, Math.PI * 2); flappyCtx.fill();
         flappyCtx.fillStyle = '#FFA500';
-        flappyCtx.beginPath();
-        flappyCtx.ellipse(-5, 3, 8, 5, -0.5, 0, Math.PI * 2);
-        flappyCtx.fill();
+        flappyCtx.beginPath(); flappyCtx.ellipse(-5, 3, 8, 5, -0.5, 0, Math.PI * 2); flappyCtx.fill();
         flappyCtx.fillStyle = '#fff';
-        flappyCtx.beginPath();
-        flappyCtx.arc(7, -4, 5, 0, Math.PI * 2);
-        flappyCtx.fill();
+        flappyCtx.beginPath(); flappyCtx.arc(7, -4, 5, 0, Math.PI * 2); flappyCtx.fill();
         flappyCtx.fillStyle = '#111';
-        flappyCtx.beginPath();
-        flappyCtx.arc(8.5, -4, 3, 0, Math.PI * 2);
-        flappyCtx.fill();
+        flappyCtx.beginPath(); flappyCtx.arc(8.5, -4, 3, 0, Math.PI * 2); flappyCtx.fill();
         flappyCtx.fillStyle = '#FF6F00';
-        flappyCtx.beginPath();
-        flappyCtx.moveTo(14, -1); flappyCtx.lineTo(20, 2); flappyCtx.lineTo(14, 5);
-        flappyCtx.closePath();
-        flappyCtx.fill();
+        flappyCtx.beginPath(); flappyCtx.moveTo(14,-1); flappyCtx.lineTo(20,2); flappyCtx.lineTo(14,5); flappyCtx.closePath(); flappyCtx.fill();
         flappyCtx.restore();
     }
 
     function drawFlappyPipes() {
         flappyPipes.forEach(pipe => {
-            const pipeGrad = flappyCtx.createLinearGradient(pipe.x, 0, pipe.x + pipe.width, 0);
-            pipeGrad.addColorStop(0, '#00cc6a');
-            pipeGrad.addColorStop(0.5, '#00ff88');
-            pipeGrad.addColorStop(1, '#009944');
-            flappyCtx.fillStyle = pipeGrad;
+            const g = flappyCtx.createLinearGradient(pipe.x, 0, pipe.x + pipe.width, 0);
+            g.addColorStop(0,'#00cc6a'); g.addColorStop(0.5,'#00ff88'); g.addColorStop(1,'#009944');
+            flappyCtx.fillStyle = g;
             flappyCtx.fillRect(pipe.x, 0, pipe.width, pipe.topHeight);
             flappyCtx.fillRect(pipe.x - 4, pipe.topHeight - 18, pipe.width + 8, 18);
             flappyCtx.fillRect(pipe.x, pipe.bottomY, pipe.width, flappyCanvas.height - pipe.bottomY);
@@ -1023,106 +1124,72 @@
 
     function flappyLoop() {
         if (!flappyGameRunning) return;
-
         flappyBird.velocity += flappyBird.gravity;
         flappyBird.y += flappyBird.velocity;
-
-        if (flappyBird.y + 13 >= flappyCanvas.height - 20 || flappyBird.y - 13 <= 0) {
-            endFlappyGame(); return;
-        }
-
-        if (flappyPipes.length === 0 || flappyPipes[flappyPipes.length - 1].x < flappyCanvas.width - 160) {
-            createFlappyPipe();
-        }
-
+        if (flappyBird.y + 13 >= flappyCanvas.height - 20 || flappyBird.y - 13 <= 0) { endFlappyGame(); return; }
+        if (flappyPipes.length === 0 || flappyPipes[flappyPipes.length-1].x < flappyCanvas.width - 160) createFlappyPipe();
+        let hit = false;
         flappyPipes.forEach(pipe => {
             pipe.x -= 3.5;
             if (!pipe.scored && pipe.x + pipe.width < flappyBird.x) {
-                pipe.scored = true;
-                flappyScore++;
+                pipe.scored = true; flappyScore++;
                 const el = document.getElementById('flappyScore');
                 el.textContent = flappyScore;
                 el.classList.add('score-pop');
                 setTimeout(() => el.classList.remove('score-pop'), 400);
             }
             if (flappyBird.x + 14 > pipe.x && flappyBird.x - 14 < pipe.x + pipe.width) {
-                if (flappyBird.y - 13 < pipe.topHeight || flappyBird.y + 13 > pipe.bottomY) {
-                    endFlappyGame(); return;
-                }
+                if (flappyBird.y - 13 < pipe.topHeight || flappyBird.y + 13 > pipe.bottomY) hit = true;
             }
         });
-
+        if (hit) { endFlappyGame(); return; }
         flappyPipes = flappyPipes.filter(p => p.x + p.width > 0);
-
-        drawFlappyScene();
-        drawFlappyPipes();
-        drawFlappyBird();
-
-        flappyCtx.fillStyle = 'rgba(0,0,0,0.55)';
-        flappyCtx.fillRect(8, 8, 80, 28);
-        flappyCtx.fillStyle = '#00ff88';
-        flappyCtx.font = 'bold 14px Poppins, sans-serif';
+        drawFlappyScene(); drawFlappyPipes(); drawFlappyBird();
+        flappyCtx.fillStyle = 'rgba(0,0,0,0.55)'; flappyCtx.fillRect(8,8,80,28);
+        flappyCtx.fillStyle = '#00ff88'; flappyCtx.font = 'bold 14px Poppins,sans-serif';
         flappyCtx.fillText('⭐ ' + flappyScore, 14, 27);
-
         flappyRAF = requestAnimationFrame(flappyLoop);
     }
 
     function endFlappyGame() {
-        flappyGameRunning = false;
-        cancelAnimationFrame(flappyRAF);
+        flappyGameRunning = false; cancelAnimationFrame(flappyRAF);
         if (flappyScore > flappyBestScore) {
             flappyBestScore = flappyScore;
             localStorage.setItem('flappyBest', flappyBestScore);
             document.getElementById('flappyBest').textContent = flappyBestScore;
             confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
         }
-        drawFlappyScene();
-        drawFlappyPipes();
-        drawFlappyBird();
-        flappyCtx.fillStyle = 'rgba(0,0,0,0.6)';
-        flappyCtx.fillRect(0, 130, flappyCanvas.width, 140);
-        flappyCtx.fillStyle = '#00ff88';
-        flappyCtx.font = 'bold 22px Poppins, sans-serif';
-        flappyCtx.textAlign = 'center';
-        flappyCtx.fillText('Game Over! 😵', flappyCanvas.width / 2, 175);
-        flappyCtx.fillStyle = '#fff';
-        flappyCtx.font = '14px Poppins, sans-serif';
-        flappyCtx.fillText('Skor: ' + flappyScore + ' | Best: ' + flappyBestScore, flappyCanvas.width / 2, 205);
-        flappyCtx.fillStyle = '#aaa';
-        flappyCtx.font = '12px Poppins, sans-serif';
-        flappyCtx.fillText('Tap/Klik "Mainkan Lagi" 👇', flappyCanvas.width / 2, 240);
+        drawFlappyScene(); drawFlappyPipes(); drawFlappyBird();
+        flappyCtx.fillStyle = 'rgba(0,0,0,0.6)'; flappyCtx.fillRect(0, 130, flappyCanvas.width, 140);
+        flappyCtx.fillStyle = '#00ff88'; flappyCtx.font = 'bold 22px Poppins,sans-serif'; flappyCtx.textAlign = 'center';
+        flappyCtx.fillText('Game Over! 😵', flappyCanvas.width/2, 175);
+        flappyCtx.fillStyle = '#fff'; flappyCtx.font = '14px Poppins,sans-serif';
+        flappyCtx.fillText('Skor: ' + flappyScore + ' | Best: ' + flappyBestScore, flappyCanvas.width/2, 205);
+        flappyCtx.fillStyle = '#aaa'; flappyCtx.font = '12px Poppins,sans-serif';
+        flappyCtx.fillText('Klik "Mainkan Lagi" 👇', flappyCanvas.width/2, 240);
         flappyCtx.textAlign = 'left';
-        document.getElementById('flappyMessage').textContent = flappyScore > 0 ? '🎉 Skor: ' + flappyScore : '💪 Coba lagi, bisa!';
+        document.getElementById('flappyMessage').textContent = flappyScore > 0 ? '🎉 Skor: ' + flappyScore : '💪 Coba lagi!';
     }
 
-    function flappyJump() {
-        if (!flappyGameRunning) return;
-        flappyBird.velocity = flappyBird.jumpPower;
-    }
+    function flappyJump() { if (flappyGameRunning) flappyBird.velocity = flappyBird.jumpPower; }
 
     function resetFlappyBird() {
         cancelAnimationFrame(flappyRAF);
         flappyBird.y = 180; flappyBird.velocity = 0;
-        flappyScore = 0; flappyPipes = [];
-        flappyGameRunning = true;
+        flappyScore = 0; flappyPipes = []; flappyGameRunning = true;
         document.getElementById('flappyScore').textContent = 0;
         document.getElementById('flappyMessage').textContent = '';
         flappyLoop();
     }
 
     flappyCanvas.addEventListener('click', flappyJump);
-    flappyCanvas.addEventListener('touchstart', (e) => { e.preventDefault(); flappyJump(); }, { passive: false });
-    document.addEventListener('keydown', (e) => {
-        if (e.code === 'Space') { flappyJump(); e.preventDefault(); }
-    });
+    flappyCanvas.addEventListener('touchstart', e => { e.preventDefault(); flappyJump(); }, { passive: false });
+    document.addEventListener('keydown', e => { if (e.code === 'Space') { flappyJump(); e.preventDefault(); } });
 
     drawFlappyScene();
-    flappyCtx.fillStyle = '#333';
-    flappyCtx.font = 'bold 16px Poppins, sans-serif';
-    flappyCtx.textAlign = 'center';
-    flappyCtx.fillText('Tap / Klik untuk mulai! 🐦', flappyCanvas.width / 2, flappyCanvas.height / 2);
+    flappyCtx.fillStyle = '#333'; flappyCtx.font = 'bold 16px Poppins,sans-serif'; flappyCtx.textAlign = 'center';
+    flappyCtx.fillText('Tap / Klik untuk mulai! 🐦', flappyCanvas.width/2, flappyCanvas.height/2);
     flappyCtx.textAlign = 'left';
-
     setTimeout(() => resetFlappyBird(), 500);
 
     // ============ MEMORY GAME ============
@@ -1137,12 +1204,10 @@
         document.getElementById('memoryMoves').textContent = 0;
         document.getElementById('memoryMatched').textContent = '0/8';
         document.getElementById('memoryMessage').textContent = '';
-
-        shuffled.forEach((emoji, i) => {
+        shuffled.forEach((emoji) => {
             const card = document.createElement('div');
             card.className = 'memory-card';
             card.dataset.emoji = emoji;
-            card.dataset.index = i;
             card.textContent = '?';
             card.addEventListener('click', () => flipMemoryCard(card));
             grid.appendChild(card);
@@ -1151,32 +1216,23 @@
 
     function flipMemoryCard(card) {
         if (!memoryCanFlip || card.classList.contains('flipped') || card.classList.contains('matched')) return;
-        card.classList.add('flipped');
-        card.textContent = card.dataset.emoji;
+        card.classList.add('flipped'); card.textContent = card.dataset.emoji;
         flippedCards.push(card);
-
         if (flippedCards.length === 2) {
-            memoryCanFlip = false;
-            memoryMoves++;
+            memoryCanFlip = false; memoryMoves++;
             document.getElementById('memoryMoves').textContent = memoryMoves;
-
             if (flippedCards[0].dataset.emoji === flippedCards[1].dataset.emoji) {
-                flippedCards[0].classList.add('matched');
-                flippedCards[1].classList.add('matched');
-                matchedPairs++;
-                document.getElementById('memoryMatched').textContent = matchedPairs + '/8';
+                flippedCards[0].classList.add('matched'); flippedCards[1].classList.add('matched');
+                matchedPairs++; document.getElementById('memoryMatched').textContent = matchedPairs + '/8';
                 flippedCards = []; memoryCanFlip = true;
-
                 if (matchedPairs === 8) {
                     document.getElementById('memoryMessage').textContent = '🎉 Kamu Menang! ' + memoryMoves + ' Gerakan';
                     confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 } });
                 }
             } else {
                 setTimeout(() => {
-                    flippedCards[0].classList.remove('flipped');
-                    flippedCards[1].classList.remove('flipped');
-                    flippedCards[0].textContent = '?';
-                    flippedCards[1].textContent = '?';
+                    flippedCards[0].classList.remove('flipped'); flippedCards[1].classList.remove('flipped');
+                    flippedCards[0].textContent = '?'; flippedCards[1].textContent = '?';
                     flippedCards = []; memoryCanFlip = true;
                 }, 800);
             }
@@ -1184,80 +1240,53 @@
     }
 
     function resetMemoryGame() { initMemoryGame(); }
-
     initMemoryGame();
 
     // ============ SNAKE GAME ============
     const snakeCanvas = document.getElementById('snakeCanvas');
     const snakeCtx = snakeCanvas.getContext('2d');
     const gridSize = 20;
-    let snakeSegments = [{x: 5, y: 5}];
-    let foodPos = {x: Math.floor(Math.random() * 15), y: Math.floor(Math.random() * 15)};
-    let snakeDirection = {x: 1, y: 0};
-    let nextDirection = {x: 1, y: 0};
+    let snakeSegments = [{x:5,y:5}];
+    let foodPos = {x:Math.floor(Math.random()*15), y:Math.floor(Math.random()*15)};
+    let snakeDirection = {x:1,y:0}, nextDirection = {x:1,y:0};
     let snakeGameScore = 0;
     let snakeBestScore = parseInt(localStorage.getItem('snakeBest') || '0');
-    let snakeGameActive = true;
-    let snakeRAF;
-
+    let snakeGameActive = true, snakeRAF, snakeLastTime = 0;
+    const snakeSpeed = 150;
     document.getElementById('snakeBest').textContent = snakeBestScore;
 
     function drawSnakeGame() {
-        snakeCtx.fillStyle = '#0a0a0a';
-        snakeCtx.fillRect(0, 0, snakeCanvas.width, snakeCanvas.height);
-
+        snakeCtx.fillStyle = '#0a0a0a'; snakeCtx.fillRect(0,0,snakeCanvas.width,snakeCanvas.height);
         snakeCtx.fillStyle = '#00ff88';
-        snakeCtx.fillRect(foodPos.x * gridSize + 2, foodPos.y * gridSize + 2, gridSize - 4, gridSize - 4);
-
+        snakeCtx.fillRect(foodPos.x*gridSize+2, foodPos.y*gridSize+2, gridSize-4, gridSize-4);
         snakeCtx.fillStyle = '#00cc6a';
-        snakeSegments.forEach((seg, idx) => {
-            snakeCtx.fillRect(seg.x * gridSize + 1, seg.y * gridSize + 1, gridSize - 2, gridSize - 2);
-        });
-
-        snakeCtx.strokeStyle = 'rgba(0,255,136,0.3)';
-        snakeCtx.lineWidth = 1;
+        snakeSegments.forEach(seg => snakeCtx.fillRect(seg.x*gridSize+1, seg.y*gridSize+1, gridSize-2, gridSize-2));
+        snakeCtx.strokeStyle = 'rgba(0,255,136,0.15)'; snakeCtx.lineWidth = 0.5;
         for (let i = 0; i <= 15; i++) {
-            snakeCtx.beginPath();
-            snakeCtx.moveTo(i * gridSize, 0);
-            snakeCtx.lineTo(i * gridSize, snakeCanvas.height);
-            snakeCtx.stroke();
-            snakeCtx.beginPath();
-            snakeCtx.moveTo(0, i * gridSize);
-            snakeCtx.lineTo(snakeCanvas.width, i * gridSize);
-            snakeCtx.stroke();
+            snakeCtx.beginPath(); snakeCtx.moveTo(i*gridSize,0); snakeCtx.lineTo(i*gridSize,snakeCanvas.height); snakeCtx.stroke();
+            snakeCtx.beginPath(); snakeCtx.moveTo(0,i*gridSize); snakeCtx.lineTo(snakeCanvas.width,i*gridSize); snakeCtx.stroke();
         }
-
-        snakeCtx.fillStyle = 'rgba(0,0,0,0.55)';
-        snakeCtx.fillRect(8, 8, 80, 28);
-        snakeCtx.fillStyle = '#00ff88';
-        snakeCtx.font = 'bold 14px Poppins, sans-serif';
+        snakeCtx.fillStyle = 'rgba(0,0,0,0.55)'; snakeCtx.fillRect(8,8,80,28);
+        snakeCtx.fillStyle = '#00ff88'; snakeCtx.font = 'bold 14px Poppins,sans-serif';
         snakeCtx.fillText('⭐ ' + snakeGameScore, 14, 27);
     }
 
-    function updateSnakeGame() {
+    function updateSnakeGame(timestamp) {
         if (!snakeGameActive) return;
-
+        if (timestamp - snakeLastTime < snakeSpeed) { snakeRAF = requestAnimationFrame(updateSnakeGame); return; }
+        snakeLastTime = timestamp;
         snakeDirection = nextDirection;
         const head = snakeSegments[0];
-        const newHead = {x: (head.x + snakeDirection.x + 15) % 15, y: (head.y + snakeDirection.y + 15) % 15};
-
+        const newHead = {x:(head.x+snakeDirection.x+15)%15, y:(head.y+snakeDirection.y+15)%15};
         for (let seg of snakeSegments) {
-            if (newHead.x === seg.x && newHead.y === seg.y) {
-                endSnakeGame();
-                return;
-            }
+            if (newHead.x === seg.x && newHead.y === seg.y) { endSnakeGame(); return; }
         }
-
         snakeSegments.unshift(newHead);
-
         if (newHead.x === foodPos.x && newHead.y === foodPos.y) {
             snakeGameScore++;
             document.getElementById('snakeScore').textContent = snakeGameScore;
-            foodPos = {x: Math.floor(Math.random() * 15), y: Math.floor(Math.random() * 15)};
-        } else {
-            snakeSegments.pop();
-        }
-
+            foodPos = {x:Math.floor(Math.random()*15), y:Math.floor(Math.random()*15)};
+        } else { snakeSegments.pop(); }
         drawSnakeGame();
         snakeRAF = requestAnimationFrame(updateSnakeGame);
     }
@@ -1271,59 +1300,119 @@
             confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
         }
         drawSnakeGame();
-        snakeCtx.fillStyle = 'rgba(0,0,0,0.6)';
-        snakeCtx.fillRect(30, 100, 240, 100);
-        snakeCtx.fillStyle = '#00ff88';
-        snakeCtx.font = 'bold 22px Poppins, sans-serif';
-        snakeCtx.textAlign = 'center';
+        snakeCtx.fillStyle = 'rgba(0,0,0,0.6)'; snakeCtx.fillRect(30,100,240,100);
+        snakeCtx.fillStyle = '#00ff88'; snakeCtx.font = 'bold 22px Poppins,sans-serif'; snakeCtx.textAlign = 'center';
         snakeCtx.fillText('Game Over! 💀', 150, 130);
-        snakeCtx.fillStyle = '#fff';
-        snakeCtx.font = '14px Poppins, sans-serif';
+        snakeCtx.fillStyle = '#fff'; snakeCtx.font = '14px Poppins,sans-serif';
         snakeCtx.fillText('Skor: ' + snakeGameScore + ' | Best: ' + snakeBestScore, 150, 160);
         snakeCtx.textAlign = 'left';
         document.getElementById('snakeMessage').textContent = snakeGameScore > 0 ? '🎉 Skor: ' + snakeGameScore : '💪 Coba lagi!';
     }
 
     function resetSnakeGame() {
-        snakeSegments = [{x: 5, y: 5}];
-        foodPos = {x: Math.floor(Math.random() * 15), y: Math.floor(Math.random() * 15)};
-        snakeDirection = {x: 1, y: 0};
-        nextDirection = {x: 1, y: 0};
-        snakeGameScore = 0;
-        snakeGameActive = true;
+        cancelAnimationFrame(snakeRAF);
+        snakeSegments = [{x:5,y:5}]; foodPos = {x:Math.floor(Math.random()*15),y:Math.floor(Math.random()*15)};
+        snakeDirection = {x:1,y:0}; nextDirection = {x:1,y:0};
+        snakeGameScore = 0; snakeGameActive = true; snakeLastTime = 0;
         document.getElementById('snakeScore').textContent = 0;
         document.getElementById('snakeMessage').textContent = '';
-        updateSnakeGame();
+        requestAnimationFrame(updateSnakeGame);
     }
 
     function dpadPress(dir) {
-        if (dir === 'up' && snakeDirection.y === 0) nextDirection = {x: 0, y: -1};
-        if (dir === 'down' && snakeDirection.y === 0) nextDirection = {x: 0, y: 1};
-        if (dir === 'left' && snakeDirection.x === 0) nextDirection = {x: -1, y: 0};
-        if (dir === 'right' && snakeDirection.x === 0) nextDirection = {x: 1, y: 0};
+        if (dir==='up' && snakeDirection.y===0) nextDirection={x:0,y:-1};
+        if (dir==='down' && snakeDirection.y===0) nextDirection={x:0,y:1};
+        if (dir==='left' && snakeDirection.x===0) nextDirection={x:-1,y:0};
+        if (dir==='right' && snakeDirection.x===0) nextDirection={x:1,y:0};
     }
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') dpadPress('up');
-        if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') dpadPress('down');
-        if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') dpadPress('left');
-        if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') dpadPress('right');
+    document.addEventListener('keydown', e => {
+        if (e.key==='ArrowUp'||e.key==='w'||e.key==='W') { dpadPress('up'); e.preventDefault(); }
+        if (e.key==='ArrowDown'||e.key==='s'||e.key==='S') { dpadPress('down'); e.preventDefault(); }
+        if (e.key==='ArrowLeft'||e.key==='a'||e.key==='A') { dpadPress('left'); e.preventDefault(); }
+        if (e.key==='ArrowRight'||e.key==='d'||e.key==='D') { dpadPress('right'); e.preventDefault(); }
     });
 
-    drawSnakeGame();
-    resetSnakeGame();
+    drawSnakeGame(); resetSnakeGame();
 
     // ============ AI CHAT WIDGET ============
+    let chatOpen = false;
+    const chatHistory = [];
+    const sysPrompt = "Kamu adalah Clone AI, asisten virtual yang ramah dan seru dari portofolio Muh. Arifatwa & Nurwafisah. Kamu tahu bahwa Arif adalah mahasiswa S.Kom yang suka gaming, dan Fisah adalah seorang S.Pd yang kreatif. Mereka berdua suka main FF dan ML, serta sudah wisuda. Jawab dalam Bahasa Indonesia, singkat, friendly, dan menyenangkan. Gunakan emoji sesekali.";
+
     function toggleChat() {
-        document.getElementById('ai-chat-window').classList.toggle('open');
-        document.getElementById('ai-chat-toggle').classList.toggle('open');
+        chatOpen = !chatOpen;
+        document.getElementById('ai-chat-window').classList.toggle('open', chatOpen);
+        document.getElementById('ai-chat-toggle').classList.toggle('open', chatOpen);
+        document.getElementById('ai-chat-badge').style.display = 'none';
+        if (chatOpen && document.getElementById('chatMessages').children.length === 0) {
+            addMessage('ai', 'Halo! 👋 Saya Clone AI. Mau tanya apa tentang Arif & Fisah, atau mau jokes, tips gaming? 😄');
+        }
     }
 
-    // Stub functions for remaining features
-    function toggleMusic() { console.log('Music toggle'); }
-    function sendAIMsg() { console.log('Send AI message'); }
-    function quickSend(msg) { console.log('Quick send:', msg); }
-    </script>
+    function addMessage(role, text) {
+        const wrap = document.getElementById('chatMessages');
+        const div = document.createElement('div');
+        div.className = 'c-msg ' + role;
+        div.innerHTML = '<div class="c-msg-avatar">' + (role==='ai'?'🤖':'👤') + '</div><div class="c-msg-bubble">' + text + '</div>';
+        wrap.appendChild(div);
+        wrap.scrollTop = wrap.scrollHeight;
+    }
 
+    function setLoading(on) {
+        document.getElementById('ai-loading-bar').style.display = on ? 'block' : 'none';
+        document.getElementById('sendBtn').disabled = on;
+        const msgs = document.getElementById('chatMessages');
+        if (on) {
+            const typing = document.createElement('div');
+            typing.id = 'typing-indicator';
+            typing.className = 'c-msg ai';
+            typing.innerHTML = '<div class="c-msg-avatar">🤖</div><div class="typing-dots"><span></span><span></span><span></span></div>';
+            msgs.appendChild(typing);
+            msgs.scrollTop = msgs.scrollHeight;
+        } else {
+            const t = document.getElementById('typing-indicator');
+            if (t) t.remove();
+        }
+    }
+
+    async function sendAIMsg() {
+        const input = document.getElementById('chatInput');
+        const text = input.value.trim();
+        if (!text) return;
+        input.value = '';
+        addMessage('user', text);
+        chatHistory.push({ role: 'user', content: text });
+        setLoading(true);
+        try {
+            const res = await fetch('https://api.anthropic.com/v1/messages', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    model: 'claude-sonnet-4-20250514',
+                    max_tokens: 300,
+                    system: sysPrompt,
+                    messages: chatHistory
+                })
+            });
+            const data = await res.json();
+            const reply = data.content && data.content[0] ? data.content[0].text : 'Maaf, ada error nih 😅';
+            chatHistory.push({ role: 'assistant', content: reply });
+            setLoading(false);
+            addMessage('ai', reply);
+        } catch(err) {
+            setLoading(false);
+            addMessage('ai', 'Waduh, koneksi error nih! Coba lagi ya 😅');
+        }
+    }
+
+    function quickSend(msg) {
+        document.getElementById('chatInput').value = msg;
+        sendAIMsg();
+    }
+
+    // Init
+    window.addEventListener('load', checkBirthday);
+    </script>
 </body>
 </html>
