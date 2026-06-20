@@ -1264,24 +1264,10 @@
 
     <button class="music-toggle" id="musicToggle" onclick="toggleMusic()" aria-label="Toggle musik">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-    <!-- Floating particles -->
-    <div id="particles-bg"></div>
-
-    <!-- Birthday Banner -->
-    <div class="birthday-banner" id="birthdayBanner">
-        <h2>🎉 Selamat Ulang Tahun! 🎉</h2>
-        <p id="birthdayBannerName"></p>
-    </div>
-
-    <audio id="backgroundMusic" loop>
-        Browser Anda tidak mendukung elemen audio.
-    </audio>
-
-    <button class="music-toggle" id="musicToggle" onclick="toggleMusic()">
-        <svg id="musicIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
             <path d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zm-15.5-6v12h4l5 5V1l-5 5H3z"/>
         </svg>
     </button>
+
 
     <header>
         <h1>Portofolio Bersama Kami</h1>
@@ -1310,28 +1296,6 @@
                     Bung Clone
                 </a>
             </div>
-        <div class="bio-card-wrapper">
-            <div class="birthday-badge" id="badge-arif">
-                <div class="birthday-badge-text">
-                    <span class="badge-emoji">🎂</span>
-                    <span>Ulang Tahun!</span>
-                </div>
-            </div>
-            <div class="bio-card reveal reveal-delay-1">
-                <img src="image/arif.jpg" alt="Foto Muh. Arifatwa">
-                <h3>Muh. Arifatwa, S.Kom</h3>
-                <p>Mahasiswa, gamer, pecinta teknologi.</p>
-                 <a href="https://www.instagram.com/bung_clonee?igsh=NDlyMXpmeXd5cnVt" target="_blank" class="social-link instagram-link">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="3" width="18" height="18" rx="5" ry="5"/>
-                        <path d="M12 11.5a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3z"/>
-                        <path d="M16 8h.01"/>
-                        <path d="M12 8V6"/>
-                        <path d="M12 18V16"/>
-                     </svg>
-                     Bung CLone
-                </a>
-            </div>
         </div>
 
         <div class="bio-card-wrapper">
@@ -1351,28 +1315,6 @@
                         <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                         <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                     </svg>
-                    nr.wfsah
-                </a>
-            </div>
-        <div class="bio-card-wrapper">
-            <div class="birthday-badge" id="badge-fisah">
-                <div class="birthday-badge-text">
-                    <span class="badge-emoji">🎂</span>
-                    <span>Ulang Tahun!</span>
-                </div>
-            </div>
-            <div class="bio-card reveal reveal-delay-2">
-                <img src="image/fisah.jpg" alt="Foto Pasangan">
-                <h3>Nurwafisah, S.Pd</h3>
-                <p>Kreatif, penyayang, dan partner terbaik.</p>
-                <a href="https://www.instagram.com/nr.wfsah?igsh=dmsybTJxZTM4YTBv" target="_blank" class="social-link instagram-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="3" width="18" height="18" rx="5" ry="5"/>
-                        <path d="M12 11.5a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3z"/>
-                        <path d="M16 8h.01"/>
-                        <path d="M12 8V6"/>
-                        <path d="M12 18V16"/>
-                     </svg>
                     nr.wfsah
                 </a>
             </div>
@@ -1414,146 +1356,12 @@
                 <img src="image/ff1.jpg" alt="FF1">
                 <img src="image/ff2.jpg" alt="FF2">
                 <img src="image/6.jpg" alt="Foto Jalan 2">
-                <img src="image/ml1.jpg" alt="ML1">
-                <img src="image/ml2.jpg" alt="ML2">
-                <img src="image/ff1.jpg" alt="FF1">
-                <img src="image/ff2.jpg" alt="FF2">
-                <img src="image/6.jpg" alt="Foto Jalan 2">
             </div>
+
         </div>
     </section>
 
-    <!-- GAME SECTION -->
-    <section class="game reveal">
-        <h2>🎮 Game Arena — Mainkan & Raih Skor Tertinggi!</h2>
-        <div class="game-tabs">
-            <button class="game-tab active" onclick="switchGame('flappy', event)">🐦 Flappy Bird</button>
-            <button class="game-tab" onclick="switchGame('memory', event)">🧠 Memory Game</button>
-            <button class="game-tab" onclick="switchGame('snake', event)">🐍 Snake Game</button>
-        </div>
-
-        <!-- FLAPPY BIRD -->
-        <div id="flappy-container" class="game-container active">
-            <p class="game-info">Klik / tap canvas atau tekan <strong style="color:#00ff88">SPASI</strong> untuk terbang! 🎯</p>
-            <canvas id="flappyCanvas" width="300" height="400"></canvas>
-            <p class="tap-hint">📱 Mobile: tap canvas untuk loncat!</p>
-            <div class="game-stats">
-                <div class="stat"><div class="stat-label">Skor Sekarang</div><div class="stat-value" id="flappyScore">0</div></div>
-                <div class="stat"><div class="stat-label">🏆 Skor Terbaik</div><div class="stat-value" id="flappyBest">0</div></div>
-            </div>
-            <div class="game-message" id="flappyMessage"></div>
-            <button class="reset-button" onclick="resetFlappyBird()">🔄 Mainkan Lagi</button>
-        </div>
-
-        <!-- MEMORY GAME -->
-        <div id="memory-container" class="game-container">
-            <p class="game-info">Temukan semua pasangan emoji yang tersembunyi! 🎯</p>
-            <div class="game-stats">
-                <div class="stat"><div class="stat-label">👆 Gerakan</div><div class="stat-value" id="memoryMoves">0</div></div>
-                <div class="stat"><div class="stat-label">✅ Pasangan</div><div class="stat-value" id="memoryMatched">0/8</div></div>
-            </div>
-            <div class="memory-grid" id="memoryGrid"></div>
-            <div class="game-message" id="memoryMessage"></div>
-            <button class="reset-button" onclick="resetMemoryGame()">🔄 Mainkan Lagi</button>
-        </div>
-
-        <!-- SNAKE GAME -->
-        <div id="snake-container" class="game-container">
-            <p class="game-info">Gunakan <strong style="color:#00ff88">ARROW / WASD</strong> untuk bergerak! 🎯</p>
-            <canvas id="snakeCanvas" width="300" height="300"></canvas>
-            <div class="dpad" id="snakeDpad" style="display:none">
-                <div class="dpad-row"><div class="dpad-btn" ontouchstart="dpadPress('up')" onmousedown="dpadPress('up')">↑</div></div>
-                <div class="dpad-row">
-                    <div class="dpad-btn" ontouchstart="dpadPress('left')" onmousedown="dpadPress('left')">←</div>
-                    <div class="dpad-btn" ontouchstart="dpadPress('down')" onmousedown="dpadPress('down')">↓</div>
-                    <div class="dpad-btn" ontouchstart="dpadPress('right')" onmousedown="dpadPress('right')">→</div>
-                </div>
-            </div>
-            <div class="game-stats">
-                <div class="stat"><div class="stat-label">Skor Sekarang</div><div class="stat-value" id="snakeScore">0</div></div>
-                <div class="stat"><div class="stat-label">🏆 Skor Terbaik</div><div class="stat-value" id="snakeBest">0</div></div>
-            </div>
-            <div class="game-message" id="snakeMessage"></div>
-            <button class="reset-button" onclick="resetSnakeGame()">🔄 Mainkan Lagi</button>
-        </div>
-    <!-- ============ GAME SECTION ============ -->
-    <section class="game reveal" style="text-align:center;">
-        <h2>🎮 Game Arena — Mainkan & Raih Skor Tertinggi!</h2>
-        
-        <div class="game-tabs">
-            <button class="game-tab active" onclick="switchGame('flappy', event)">🐦 Flappy Bird</button>
-            <button class="game-tab" onclick="switchGame('memory', event)">🧠 Memory Game</button>
-            <button class="game-tab" onclick="switchGame('snake', event)">🐍 Snake Game</button>
-        </div>
-
-        <!-- FLAPPY BIRD -->
-        <div id="flappy-container" class="game-container active">
-            <p class="game-info">Klik / tap canvas atau tekan <strong style="color:#00ff88">SPASI</strong> untuk terbang! 🎯</p>
-            <canvas id="flappyCanvas" width="300" height="400"></canvas>
-            <p class="tap-hint">📱 Mobile: tap canvas untuk loncat!</p>
-            <div class="game-stats">
-                <div class="stat">
-                    <div class="stat-label">Skor Sekarang</div>
-                    <div class="stat-value" id="flappyScore">0</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-label">🏆 Skor Terbaik</div>
-                    <div class="stat-value" id="flappyBest">0</div>
-                </div>
-            </div>
-            <div class="game-message" id="flappyMessage"></div>
-            <button class="reset-button" onclick="resetFlappyBird()">🔄 Mainkan Lagi</button>
-        </div>
-
-        <!-- MEMORY GAME -->
-        <div id="memory-container" class="game-container">
-            <p class="game-info">Temukan semua pasangan emoji yang tersembunyi! 🎯</p>
-            <div class="game-stats">
-                <div class="stat">
-                    <div class="stat-label">👆 Gerakan</div>
-                    <div class="stat-value" id="memoryMoves">0</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-label">✅ Pasangan</div>
-                    <div class="stat-value" id="memoryMatched">0/8</div>
-                </div>
-            </div>
-            <div class="memory-grid" id="memoryGrid"></div>
-            <div class="game-message" id="memoryMessage"></div>
-            <button class="reset-button" onclick="resetMemoryGame()">🔄 Mainkan Lagi</button>
-        </div>
-
-        <!-- SNAKE GAME -->
-        <div id="snake-container" class="game-container">
-            <p class="game-info">Gunakan <strong style="color:#00ff88">ARROW / WASD</strong> untuk bergerak! 🎯</p>
-            <canvas id="snakeCanvas" width="300" height="300"></canvas>
-            <!-- Mobile D-Pad -->
-            <div class="dpad" id="snakeDpad">
-                <div class="dpad-row">
-                    <div class="dpad-btn" id="dpad-up" ontouchstart="dpadPress('up')" onmousedown="dpadPress('up')">↑</div>
-                </div>
-                <div class="dpad-row">
-                    <div class="dpad-btn" id="dpad-left" ontouchstart="dpadPress('left')" onmousedown="dpadPress('left')">←</div>
-                    <div class="dpad-btn" id="dpad-down" ontouchstart="dpadPress('down')" onmousedown="dpadPress('down')">↓</div>
-                    <div class="dpad-btn" id="dpad-right" ontouchstart="dpadPress('right')" onmousedown="dpadPress('right')">→</div>
-                </div>
-            </div>
-            <div class="game-stats">
-                <div class="stat">
-                    <div class="stat-label">Skor Sekarang</div>
-                    <div class="stat-value" id="snakeScore">0</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-label">🏆 Skor Terbaik</div>
-                    <div class="stat-value" id="snakeBest">0</div>
-                </div>
-            </div>
-            <div class="game-message" id="snakeMessage"></div>
-            <button class="reset-button" onclick="resetSnakeGame()">🔄 Mainkan Lagi</button>
-        </div>
-    </section>
-
-    <!-- PROFIL FF -->
+    <!-- PROFIL GAME FF + ML dan TESTIMONI (tanpa game) -->
     <section class="reveal">
         <h2>Profil Game FF</h2>
         <div class="profile-container">
@@ -1570,8 +1378,6 @@
         </div>
     </section>
 
-    <!-- PROFIL ML -->
-    
     <section class="reveal">
         <h2>Profil Game ML</h2>
         <div class="profile-container">
@@ -1601,6 +1407,7 @@
     <footer>
         <p>&copy; Dibuat oleh Bung Clone Tahun 2025 @Bung-Clone</p>
         <div class="social-footer">
+
             <a href="https://www.instagram.com/bung_clonee?igsh=NDlyMXpmeXd5cnVt" target="_blank" class="footer-instagram-link">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -1618,36 +1425,15 @@
                 nr.wfsah
             </a>
         </div>
-        <p>&copy; Di buat oleh BUng Clone Tahun 2025 @Bung-Clone</p>
-        <div class="social-footer">
-            <a href="https://www.instagram.com/bung_clonee?igsh=NDlyMXpmeXd5cnVt" target="_blank" class="footer-instagram-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="5" ry="5"/>
-                    <path d="M12 11.5a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3z"/>
-                    <path d="M16 8h.01"/>
-                    <path d="M12 8V6"/>
-                    <path d="M12 18V16"/>
-                </svg>
-                Bung CLone
-            </a>
-            <a href="https://www.instagram.com/nr.wfsah?igsh=dmsybTJxZTM4YTBv" target="_blank" class="footer-instagram-link">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="5" ry="5"/>
-                    <path d="M12 11.5a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3z"/>
-                    <path d="M16 8h.01"/>
-                    <path d="M12 8V6"/>
-                    <path d="M12 18V16"/>
-                </svg>
-                nr.wfsah
-            </a>
-        </div>
+        <!-- Hapus duplikat footer link (bagian ini muncul 2x) -->
     </footer>
 
-    <!-- AI CHAT WIDGET -->
+    <!-- AI CHAT WIDGET (single instance) -->
     <button id="ai-chat-toggle" onclick="toggleChat()" title="Chat dengan Clone AI">
         <span id="chat-icon">🤖</span>
         <span id="ai-chat-badge">1</span>
     </button>
+
 
     <div id="ai-chat-window">
         <div class="chat-header">
@@ -1668,38 +1454,6 @@
         </div>
         <div class="chat-input-row">
             <input class="c-input" id="chatInput" placeholder="Ketik pesan..."
-                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAIMsg();}">
-            <button class="c-send" id="sendBtn" onclick="sendAIMsg()">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-            </button>
-        </div>
-    </div>
-
-    <!-- ============ AI CHAT WIDGET ============ -->
-    <button id="ai-chat-toggle" onclick="toggleChat()" title="Chat dengan Clone AI">
-        <span id="chat-icon">🤖</span>
-        <span id="ai-chat-badge">1</span>
-    </button>
-
-    <div id="ai-chat-window">
-        <div class="chat-header">
-            <div class="chat-avatar-wrap">🤖</div>
-            <div class="chat-header-info">
-                <h3>Clone AI 💚</h3>
-                <p><span class="online-dot"></span> Online — Siap ngobrol!</p>
-            </div>
-            <button class="chat-close" onclick="toggleChat()">✕</button>
-        </div>
-        <div id="ai-loading-bar" class="ai-loading-bar" style="display:none;"></div>
-        <div class="chat-messages" id="chatMessages"></div>
-        <div class="chat-quick-btns" id="chatQuicks">
-            <button class="c-quick" onclick="quickSend('Cerita tentang Arif & Fisah!')">👫 Tentang mereka</button>
-            <button class="c-quick" onclick="quickSend('Kasih jokes lucu dong!')">😂 Jokes!</button>
-            <button class="c-quick" onclick="quickSend('Tips gaming FF ML dong!')">🎮 Gaming tips</button>
-            <button class="c-quick" onclick="quickSend('Beri aku quote motivasi!')">✨ Motivasi</button>
-        </div>
-        <div class="chat-input-row">
-            <input class="c-input" id="chatInput" placeholder="Ketik pesan..." 
                 onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();sendAIMsg();}">
             <button class="c-send" id="sendBtn" onclick="sendAIMsg()">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
@@ -1707,13 +1461,27 @@
         </div>
     </div>
 
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <!-- JS hanya untuk banner, particles, testimoni, dan chat. Semua game logic sengaja dihapus. -->
     <script>
-    // ============ BIRTHDAY DETECTION ============
-    const birthdayData = [
+    /* GAME SECTION DIHAPUS */
+    (function(){
+    // ============ BIRTHDAY DETECTION (single source of truth) ============
+
+
+
+
+    var birthdayData = [
         { date: "05-29", name: "Nurwafisah", badgeId: "badge-fisah" },
         { date: "10-25", name: "Muh Arifatwa", badgeId: "badge-arif" }
     ];
+
+    // prevent duplicates (this file currently contains multiple game/script blocks)
+    // NOTE: only the first occurrence of vars/functions should remain active.
+    // Wrap rest in a no-op guard by re-defining the localStorage keys will be enough.
+
 
     function getTodayDate() {
         const now = new Date();
